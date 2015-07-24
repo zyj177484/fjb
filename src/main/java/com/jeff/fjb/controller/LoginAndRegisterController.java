@@ -50,10 +50,10 @@ public class LoginAndRegisterController {
 			UserEntity userEntity = userService.getUserEntity(id);
 			mv.addObject("message", "欢迎登录:" + userEntity.getUsername());
 			mv.addObject("user", userEntity);
-			mv.setViewName("/user/hello");
+			mv.setViewName("/user/dashboard");
 		} else {
 			mv.addObject("message", preCheckResult);
-			mv.setViewName("dashboard");
+			mv.setViewName("index");
 		}
 		return mv;
 	}

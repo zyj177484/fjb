@@ -20,11 +20,15 @@
 	  
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> 
-    <!-- HandlerMapping -->
-    <!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> -->
+
+    <!-- 处理器 -->
+    <context:component-scan base-package="com.jeff.fjb.controller" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
     
-    <!-- HandlerAdapter -->
-    <!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/> -->
+    <!-- 支持上传文件 -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
+    
     
     <!-- ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -33,10 +37,5 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     
-    <!-- 处理器 -->
-    <context:component-scan base-package="com.jeff.fjb.controller" />
-    
-    <!-- 支持上传文件 -->  
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
-    
+
 </beans>
