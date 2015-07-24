@@ -6,10 +6,10 @@ Artifact: fjb
 .setting文件夹，修改其中的org.eclipse.wst.common.project.facet.core.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
-  <fixed facet="wst.jsdt.web"/>
-  <installed facet="java" version="1.7"/>
-  <installed facet="jst.web" version="3.0"/>
-  <installed facet="wst.jsdt.web" version="1.0"/>
+<fixed facet="wst.jsdt.web"/>
+<installed facet="java" version="1.7"/>
+<installed facet="jst.web" version="3.0"/>
+<installed facet="wst.jsdt.web" version="1.0"/>
 </faceted-project>
 
 build path: remove src/main/java and src/test/java
