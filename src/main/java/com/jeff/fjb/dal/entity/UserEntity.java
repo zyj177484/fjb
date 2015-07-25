@@ -6,17 +6,17 @@ public class UserEntity {
     private String password;
     private String sessionId;
     private String role;
-    private byte[] photo = null;
     private String zonghang;
     private String fenhang;
     private String zhihang;
     private String fenlichu;
     private String sex;
     private String mobile;
+    private String mail;
     public UserEntity(){}
     
 	public UserEntity(String id, String username, String password, String sessionId, String role, String zonghang,
-			String fenhang, String zhihang, String fenlichu, String sex, String mobile) {
+			String fenhang, String zhihang, String fenlichu, String sex, String mobile, String mail) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -28,13 +28,15 @@ public class UserEntity {
 		this.fenlichu = fenlichu;
 		this.sex = sex;
 		this.mobile = mobile;
+		this.mail = mail;
 	}
 
-	public byte[] getPhoto() {
-		return photo;
+	public String getMail() {
+		return mail;
 	}
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	public String getId() {
 		return id;

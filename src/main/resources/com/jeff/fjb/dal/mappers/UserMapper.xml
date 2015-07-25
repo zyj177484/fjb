@@ -3,17 +3,23 @@
 
 <mapper namespace="com.jeff.fjb.dal.mappers.UserMapper">
 	<select id="getUserEntity" parameterType="String" resultType="User">
-		SELECT * FROM user WHERE id=#{id}
+		SELECT id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail FROM user WHERE id=#{id}
 	</select>
 	<select id="getCheckInfo" parameterType="String" resultType="User">
 		SELECT id, password, sessionId, role FROM user WHERE id=#{id}
+	</select>
+	<select id="getPhoto" parameterType="String" resultType="java.sql.Blob">
+		SELECT photo FROM user WHERE id=#{id}
 	</select>
 	<update id="updateSessionId">
 		UPDATE user SET sessionId=#{sessionId} WHERE id=#{id}
 	</update>
 	<insert id="insertUser" parameterType="User">
-		INSERT INTO user (id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile)
-		VALUES (#{id}, #{username}, #{password}, #{role}, #{sessionId}, #{sex}, #{zonghang}, #{fenhang}, #{zhihang}, #{fenlichu}, #{mobile})
+		INSERT INTO user (id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail)
+		VALUES (#{id}, #{username}, #{password}, #{role}, #{sessionId}, #{sex}, #{zonghang}, #{fenhang}, #{zhihang}, #{fenlichu}, #{mobile}, #{mail})
 	</insert>
-	
+	<update id="insertUserPhoto">
+		UPDATE user SET photo=#{photo,jdbcType=BLOB}
+		WHERE id=#{id}
+	</update>
 </mapper>

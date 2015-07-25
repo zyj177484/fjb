@@ -28,6 +28,16 @@ public class UserService {
 		}
 	}
 
+	public java.sql.Blob getPhoto(String id) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			return userMapper.getPhoto(id);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 	public void updateUserSession(String id, String sessionId) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -44,6 +54,17 @@ public class UserService {
 		try {
 			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 			userMapper.insertUser(userEntity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public void insertUserPhoto(String id, byte[] photo) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			userMapper.insertUserPhoto(id, photo);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

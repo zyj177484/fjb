@@ -8,14 +8,14 @@
 </head>
 <body>
 ${message }
-*表示必填
+<p>*表示必填</p>
 <form action="registerCheck" method="post">  
+	<!-- 认证由JS做 -->
     *身份证:<input type="text" name="id" />
     <p>  
     *密码:<input type="password" name="password"/>(密码中必须包含字母及数字)  
     <p>
     *确认密码:<input type="password" name="confirmPassword"/>
-    <!-- 密码确认由JS做? -->
     <p>
     *姓名:<input type="text" name="username" />
     <p>
@@ -23,6 +23,8 @@ ${message }
 		<input type="radio" name="sex" value="女">女
     <p>
     *手机号:<input type="text" name="mobile" />
+    <p>
+    *邮箱:<input type="text" name="mail" />
     <p>
     总行:<input type="text" name="zonghang" />
 	<p>

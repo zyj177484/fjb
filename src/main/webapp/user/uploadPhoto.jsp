@@ -7,8 +7,10 @@
 <title>上传照片</title>
 </head>
 <body>
+<!-- JS检查文件名 -->
 ${message }
-<form action="upload.do" method="post" enctype="multipart/form-data">  
+<p>请上传照片，照片尺寸要求为114×156，JPG/JPEG格式，300KB以内大小。</p>
+<form action="uploadPhotoCheck" method="post" enctype="multipart/form-data">  
 <input type="file" name="photo" /> 
 <input type="submit" value="Submit" />
 </form>  
