@@ -38,4 +38,15 @@ public class UserService {
 			sqlSession.close();
 		}
 	}
+	
+	public void insertUser(UserEntity userEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			userMapper.insertUser(userEntity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

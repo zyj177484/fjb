@@ -17,7 +17,7 @@ import com.jeff.fjb.dal.service.UserService;
 public class LoginAndRegisterController {
 
 	private UserService userService = new UserService();
-	
+
 	public String preCheck(HttpSession session) {
 		if (session.getAttribute("id") != null && session.getAttribute("password") != null) {
 			String id = session.getAttribute("id").toString();
@@ -33,11 +33,42 @@ public class LoginAndRegisterController {
 		} else
 			return "请登录或者注册";
 	}
-	
+
 	@RequestMapping(value = "/upload.do")
-	public ModelAndView register(@RequestParam(value = "photo", required = false) MultipartFile photo) {
-		
+	public ModelAndView uploadPhoto(@RequestParam(value = "photo", required = false) MultipartFile photo) {
+
 		return null;
+	}
+
+	@RequestMapping(value = "/registerCheck", method = RequestMethod.POST)
+	public ModelAndView register(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String id = request.getParameter("id");
+		UserEntity userEntity = userService.getCheckInfo(id);
+		if (userEntity == null) {
+			String password = request.getParameter("password");
+			String username = request.getParameter("username");
+			String sex = request.getParameter("sex");
+			String mobile = request.getParameter("mobile");
+			String zonghang = request.getParameter("zonghang");
+			String fenhang = request.getParameter("fenhang");
+			String zhihang = request.getParameter("zhihang");
+			String fenlichu = request.getParameter("fenlichu");
+			String role = "user";
+			userEntity = new UserEntity(id, username, password, session.getId(), role, zonghang, fenhang, zhihang,
+					fenlichu, sex, mobile);
+			userService.insertUser(userEntity);
+			session.setAttribute("id", userEntity.getId());
+			session.setAttribute("username", userEntity.getUsername());
+			session.setAttribute("password", userEntity.getPassword());
+			mv.addObject("message", "注册成功");
+			mv.setViewName("user/uploadPhoto");
+		} else {
+			mv.addObject("message", "该用户已经存在");
+			mv.setViewName("register");
+		}
+		return mv;
 	}
 
 	@RequestMapping(value = "/login")
@@ -59,9 +90,8 @@ public class LoginAndRegisterController {
 	}
 
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
-	public ModelAndView loginCheck(@RequestParam(value="id",required=true) String id, 
-			@RequestParam(value="password", required=true) String password, 
-			HttpServletRequest request) {
+	public ModelAndView loginCheck(@RequestParam(value = "id", required = true) String id,
+			@RequestParam(value = "password", required = true) String password, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		if (id != null && password != null && id.length() != 0 && password.length() != 0) {

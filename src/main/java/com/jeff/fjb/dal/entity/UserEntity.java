@@ -14,6 +14,22 @@ public class UserEntity {
     private String sex;
     private String mobile;
     public UserEntity(){}
+    
+	public UserEntity(String id, String username, String password, String sessionId, String role, String zonghang,
+			String fenhang, String zhihang, String fenlichu, String sex, String mobile) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.sessionId = sessionId;
+		this.role = role;
+		this.zonghang = zonghang;
+		this.fenhang = fenhang;
+		this.zhihang = zhihang;
+		this.fenlichu = fenlichu;
+		this.sex = sex;
+		this.mobile = mobile;
+	}
+
 	public byte[] getPhoto() {
 		return photo;
 	}

@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>注册页面</title>
+<title>上传照片</title>
 </head>
 <body>
+${message }
 <form action="upload.do" method="post" enctype="multipart/form-data">  
 <input type="file" name="photo" /> 
 <input type="submit" value="Submit" />
