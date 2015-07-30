@@ -28,7 +28,7 @@ public class UserService {
 		}
 	}
 
-	public java.sql.Blob getPhoto(String id) {
+	public UserEntity getPhoto(String id) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);

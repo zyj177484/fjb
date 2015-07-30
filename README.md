@@ -22,6 +22,8 @@ src/main/java，src/main/resources，选择target/classes;
 
 Library-> add library-> server runtime -> tomcat 7
 
+项目点击右键 点击 Properties 选择Deployment Assembly 再点击右边的Add按钮 选择Java Build Path Entries后点击Next按钮 然后选择你的Maven Dependencies
+
 maven-> update project
 
 

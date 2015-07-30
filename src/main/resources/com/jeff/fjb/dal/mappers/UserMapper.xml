@@ -2,13 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jeff.fjb.dal.mappers.UserMapper">
-	<select id="getUserEntity" parameterType="String" resultType="User">
+	<resultMap id="UserResult" type="User">     
+    	<result property="id" column="id"/>     
+    	<result property="username" column="username"/>  
+    	<result property="password" column="password" />  
+    	<result property="role" column="role" />  
+    	<result property="sessionId" column="sessionId" />  
+    	<result property="sex" column="sex" />  
+    	<result property="zonghang" column="zonghang"/>
+    	<result property="fenhang" column="fenhang"/>
+    	<result property="zhihang" column="zhihang"/>
+    	<result property="fenlichu" column="fenlichu"/>
+    	<result property="mobile" column="mobile"/>
+    	<result property="mail" column="mail"/>
+    	<result property="photo" column="photo"/>
+	</resultMap> 
+	<select id="getUserEntity" parameterType="String" resultMap="UserResult">
 		SELECT id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail FROM user WHERE id=#{id}
 	</select>
-	<select id="getCheckInfo" parameterType="String" resultType="User">
+	<select id="getCheckInfo" parameterType="String" resultMap="UserResult">
 		SELECT id, password, sessionId, role FROM user WHERE id=#{id}
 	</select>
-	<select id="getPhoto" parameterType="String" resultType="java.sql.Blob">
+	<select id="getPhoto" parameterType="String" resultMap="UserResult">
 		SELECT photo FROM user WHERE id=#{id}
 	</select>
 	<update id="updateSessionId">
@@ -18,8 +33,8 @@
 		INSERT INTO user (id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail)
 		VALUES (#{id}, #{username}, #{password}, #{role}, #{sessionId}, #{sex}, #{zonghang}, #{fenhang}, #{zhihang}, #{fenlichu}, #{mobile}, #{mail})
 	</insert>
-	<update id="insertUserPhoto">
-		UPDATE user SET photo=#{photo,jdbcType=BLOB}
+	<update id="insertUserPhoto" >
+		UPDATE user SET photo=#{photo}
 		WHERE id=#{id}
 	</update>
 </mapper>

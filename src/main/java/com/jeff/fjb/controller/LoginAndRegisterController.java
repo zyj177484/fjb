@@ -5,18 +5,22 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,6 +48,37 @@ public class LoginAndRegisterController {
 			return "请登录或者注册";
 	}
 
+	@RequestMapping(value = "/showPhoto")
+	@ResponseBody
+	public void showImage(HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("image/gif");
+		String id = request.getSession().getAttribute("id").toString();
+		OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			byte[] photo = userService.getPhoto(id).getPhoto();
+			BufferedImage test = ImageIO.read(new ByteArrayInputStream(photo));
+			if (test!=null) {
+				System.out.println("Photo h:" + test.getHeight() + " w:" + test.getWidth());
+			} else {
+				System.out.println("not a photo");
+			}
+			os.write(photo);
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (os!=null)
+				try {
+					os.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	
 	@RequestMapping(value = "/uploadPhoto")
 	public ModelAndView uploadPhoto(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -80,14 +115,6 @@ public class LoginAndRegisterController {
 							mv.setViewName("user/uploadPhoto");
 						} else {
 							userService.insertUserPhoto(id, file.getBytes());
-							java.sql.Blob photo = userService.getPhoto(id);
-							try {
-								BufferedImage test = ImageIO.read(photo.getBinaryStream());
-								System.out.println(test.getHeight());
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 							mv.setViewName("redirect:/login");
 						}
 					}
@@ -168,9 +195,9 @@ public class LoginAndRegisterController {
 				session.setAttribute("id", userEntity.getId());
 				session.setAttribute("username", userEntity.getUsername());
 				session.setAttribute("password", userEntity.getPassword());
-//				if (userService.getPhoto(id) == null && userEntity.getRole().equals("user")) 
-//					mv.setViewName("redirect:/uploadPhoto");
-//				else
+				if (userService.getPhoto(id).getPhoto() == null && userEntity.getRole().equals("user")) 
+					mv.setViewName("redirect:/uploadPhoto");
+				else
 					mv.setViewName("redirect:/login");
 			} else {
 				mv.addObject("message", "账号或者密码错误");

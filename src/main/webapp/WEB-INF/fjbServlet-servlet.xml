@@ -20,15 +20,14 @@
 	  
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> 
-
-    <!-- 处理器 -->
-    <context:component-scan base-package="com.jeff.fjb.controller" >
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
     
     <!-- 支持上传文件 -->  
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
     
+    <!-- 处理器 -->
+    <context:component-scan base-package="com.jeff.fjb.controller" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
     
     <!-- ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

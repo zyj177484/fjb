@@ -9,5 +9,6 @@
 ${message}
 ${user.username}
 ${user.password}
+<img src="showPhoto" />
 </body>
 </html>
