@@ -1,17 +1,10 @@
 package com.jeff.fjb.controller;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,12 +50,6 @@ public class LoginAndRegisterController {
 		try {
 			os = response.getOutputStream();
 			byte[] photo = userService.getPhoto(id).getPhoto();
-			BufferedImage test = ImageIO.read(new ByteArrayInputStream(photo));
-			if (test!=null) {
-				System.out.println("Photo h:" + test.getHeight() + " w:" + test.getWidth());
-			} else {
-				System.out.println("not a photo");
-			}
 			os.write(photo);
 			os.flush();
 		} catch (IOException e) {
@@ -108,8 +95,6 @@ public class LoginAndRegisterController {
 						mv.addObject("message", "上传的不是图片");
 						mv.setViewName("user/uploadPhoto");
 					} else {
-						System.out.println(image.getHeight());
-						System.out.println(image.getWidth());
 						if (image.getWidth() != 114 && image.getHeight() != 156) {
 							mv.addObject("message", "照片长宽不正确。当前照片宽：" + image.getWidth() + "长：" + image.getHeight());
 							mv.setViewName("user/uploadPhoto");
@@ -189,12 +174,13 @@ public class LoginAndRegisterController {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		if (id != null && password != null && id.length() != 0 && password.length() != 0) {
-			UserEntity userEntity = userService.getUserEntity(id);
+			UserEntity userEntity = userService.getCheckInfo(id);
 			if (userEntity != null && userEntity.getPassword().equals(password)) {
 				userService.updateUserSession(userEntity.getId(), session.getId());
 				session.setAttribute("id", userEntity.getId());
 				session.setAttribute("username", userEntity.getUsername());
 				session.setAttribute("password", userEntity.getPassword());
+				session.setAttribute("practice", userEntity.getPractice());
 				if (userService.getPhoto(id).getPhoto() == null && userEntity.getRole().equals("user")) 
 					mv.setViewName("redirect:/uploadPhoto");
 				else

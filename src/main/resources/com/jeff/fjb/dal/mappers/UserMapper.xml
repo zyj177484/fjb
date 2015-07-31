@@ -16,12 +16,13 @@
     	<result property="mobile" column="mobile"/>
     	<result property="mail" column="mail"/>
     	<result property="photo" column="photo"/>
+    	<result property="practice" column="practice"/>
 	</resultMap> 
 	<select id="getUserEntity" parameterType="String" resultMap="UserResult">
-		SELECT id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail FROM user WHERE id=#{id}
+		SELECT id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail, practice FROM user WHERE id=#{id}
 	</select>
 	<select id="getCheckInfo" parameterType="String" resultMap="UserResult">
-		SELECT id, password, sessionId, role FROM user WHERE id=#{id}
+		SELECT id, password, sessionId, role, practice FROM user WHERE id=#{id}
 	</select>
 	<select id="getPhoto" parameterType="String" resultMap="UserResult">
 		SELECT photo FROM user WHERE id=#{id}

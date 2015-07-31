@@ -14,6 +14,7 @@ public class UserEntity {
     private String mobile;
     private String mail;
     private byte[] photo;
+    private int practice;
     public UserEntity(){}
     
 	public UserEntity(String id, String username, String password, String sessionId, String role, String zonghang,
@@ -30,6 +31,14 @@ public class UserEntity {
 		this.sex = sex;
 		this.mobile = mobile;
 		this.mail = mail;
+	}
+
+	public int getPractice() {
+		return practice;
+	}
+
+	public void setPractice(int practice) {
+		this.practice = practice;
 	}
 
 	public byte[] getPhoto() {
