@@ -10,4 +10,5 @@ public interface PracticeMapper {
 	public PracticeEntity getPracticeEntity(@Param("id") int id, @Param("type") int type);
 	public List<Integer> getIDByType(@Param("type") int type);
 	public PracticeEntity getPhoto(@Param("id") int id, @Param("type") int type);
+	public void insertPracticeEntity(PracticeEntity practiceEntity);
 }

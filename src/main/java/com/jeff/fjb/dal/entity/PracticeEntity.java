@@ -9,8 +9,22 @@ public class PracticeEntity {
 	private String B;
 	private String C;
 	private String D;
+	private String E;
 	private byte[] photo;
 	
+	public PracticeEntity(){}
+	
+	public PracticeEntity(int id, String question, String answer, int type, String a, String b, String c, String d, String e) {
+		this.id = id;
+		this.question = question;
+		this.answer = answer;
+		this.type = type;
+		A = a;
+		B = b;
+		C = c;
+		D = d;
+		E = e;
+	}
 	public byte[] getPhoto() {
 		return photo;
 	}
@@ -64,6 +78,14 @@ public class PracticeEntity {
 	}
 	public void setD(String d) {
 		D = d;
+	}
+
+	public String getE() {
+		return E;
+	}
+
+	public void setE(String e) {
+		E = e;
 	}
 
 }

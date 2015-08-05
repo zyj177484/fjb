@@ -21,7 +21,7 @@ add new source folder: src/main/java
 src/main/java，src/main/resources，选择target/classes;
 
 Library-> add library-> server runtime -> tomcat 7
-
+2015.08.01 ##################
 项目点击右键 点击 Properties 选择Deployment Assembly 再点击右边的Add按钮 选择Java Build Path Entries后点击Next按钮 然后选择你的Maven Dependencies
 
 maven-> update project
@@ -78,7 +78,6 @@ type 4:案例题，类似多选题
 getQuestionPhoto说明：输入参数为id及type
 getQuestion?id=12&type=3
 jsp页面中样例<img src="getQuestion?id=12&type=3" />
-##########
-hacklu test git push
-hacklu test git push
 
+2015.08.06####################
+运行createTable.sql及data.sql导入数据库

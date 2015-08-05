@@ -18,7 +18,7 @@ public class PracticeService {
 			sqlSession.close();
 		}
 	}
-	
+
 	public PracticeEntity getPhoto(int id, int type) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -28,12 +28,23 @@ public class PracticeService {
 			sqlSession.close();
 		}
 	}
-	
+
 	public List<Integer> getIDByType(int type) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PracticeMapper practiceMapper = sqlSession.getMapper(PracticeMapper.class);
 			return practiceMapper.getIDByType(type);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public void insertPracticeEntity(PracticeEntity practiceEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PracticeMapper practiceMapper = sqlSession.getMapper(PracticeMapper.class);
+			practiceMapper.insertPracticeEntity(practiceEntity);
+			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}

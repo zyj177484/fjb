@@ -19,7 +19,12 @@
 	<select id="getIDByType">
 		SELECT id FROM practice WHERE type=#{type}
 	</select>
-	<select id="getPhoto" resultMap="UserResult">
+	<select id="getPhoto" resultMap="PracticeResult">
 		SELECT photo FROM practice WHERE id=#{id} AND type=#{type}
 	</select>
+	<insert id="insertPracticeEntity">
+		INSERT INTO practice 
+		(id, question, answer, type, A, B, C, D, E)
+		values (#{id}, #{question}, #{answer}, #{type}, #{A}, #{B}, #{C}, #{D}, #{E});
+	</insert>
 </mapper>

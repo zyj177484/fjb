@@ -27,11 +27,12 @@ CREATE TABLE `practice` (
   `question` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `answer` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
-  `A` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `B` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `C` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `D` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `A` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `B` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `C` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `D` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `photo` mediumblob,
+  `E` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -72,4 +73,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-04  0:12:18
+-- Dump completed on 2015-08-06  0:36:36
