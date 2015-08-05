@@ -80,7 +80,14 @@
 
 						myHtml += '<div style="display:none" id="question_no">'+ no +'</div><div class="left"><ul id="ul_answers">';
 
-						if(type == 1) //1 单选; 2 多选
+								if(type == 0)//something error. goback to index.jsp
+								{
+								alert("用户从其他地方登陆或者登陆超时!");
+								location.href = "index.jsp";
+
+								}
+
+						if(type == 1 || type ==3 ) //1 单选; 2 多选 ;3 判断 ;4案例题，类似多选
 						{
 
 							if(json["A"])
@@ -93,7 +100,7 @@
 								myHtml += '<li><input type="radio" value="D" name="answer" id="answer4"><label for="answer4">D：'+ json["D"] +'</label></li>';
 							/////////////
 						}
-						else if(type == 2){
+						else if(type == 2 || type ==4 ){
 							if(json["A"])
 								myHtml += '<li><input type="checkbox"" value="A" name="answer" id="answer1"><label for="answer1">A：'+ json["A"] +'</label></li>';
 							if(json["B"])
