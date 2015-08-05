@@ -1,0 +1,207 @@
+LINK {
+	FONT-SIZE: 9pt; COLOR: #fee9c0; TEXT-DECORATION: none
+}
+SELECT {
+	FONT-SIZE: 9pt; FONT-FAMILY: "宋体"
+}
+A {
+	FONT-SIZE: 9pt; COLOR: #0000ff; FONT-FAMILY: "宋体"; TEXT-DECORATION: underline
+}
+A:hover {
+	FONT-SIZE: 9pt; COLOR: red; FONT-FAMILY: "宋体"; TEXT-DECORATION: underline
+}
+A.headlines {
+	COLOR: white; FONT-FAMILY: 宋体,Arial,Helvetica; TEXT-DECORATION: none
+}
+.A2:link {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A2:visited {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A2:active {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A2:hover {
+	COLOR: #861088
+}
+.A3:link {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.A3:visited {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.A3:active {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.A3:hover {
+	COLOR: #861088; TEXT-DECORATION: none
+}
+.A4:link {
+	FONT-SIZE: 9pt; COLOR: #0044a9; TEXT-DECORATION: none
+}
+.A4:visited {
+	FONT-SIZE: 9pt; COLOR: #0044a9; TEXT-DECORATION: none
+}
+.A4:active {
+	FONT-SIZE: 9pt; COLOR: #0044a9; TEXT-DECORATION: none
+}
+.A4:hover {
+	COLOR: #861088; TEXT-DECORATION: none
+}
+.A5:link {
+	FONT-SIZE: 11pt; COLOR: #ffff00; TEXT-DECORATION: none
+}
+.A5:visited {
+	FONT-SIZE: 11pt; COLOR: #ffff00; TEXT-DECORATION: none
+}
+.A5:hover {
+	FONT-SIZE: 11pt; COLOR: #ffff00; TEXT-DECORATION: none
+}
+.A6:link {
+	FONT-SIZE: 9pt; COLOR: #c75001; TEXT-DECORATION: none
+}
+.A6:visited {
+	FONT-SIZE: 9pt; COLOR: #c75001; TEXT-DECORATION: none
+}
+.A6:active {
+	FONT-SIZE: 9pt; COLOR: #c75001; TEXT-DECORATION: none
+}
+.A6:hover {
+	COLOR: #ff8433; TEXT-DECORATION: none
+}
+.A7:link {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A7:visited {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A7:active {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.A7:hover {
+	COLOR: #861088; TEXT-DECORATION: none
+}
+.A8:link {
+	FONT-SIZE: 9pt; COLOR: #0000ff; TEXT-DECORATION: none
+}
+.A8:hover {
+	FONT-SIZE: 9pt; COLOR: #0000ff; TEXT-DECORATION: none
+}
+.A8:active {
+	FONT-SIZE: 9pt; COLOR: #0000ff; TEXT-DECORATION: none
+}
+.A8:visited {
+	COLOR: #800080; TEXT-DECORATION: none
+}
+.a1 {
+	FONT-SIZE: 9pt; FONT-FAMILY: "宋体"; TEXT-DECORATION: underline
+}
+.text1 {
+	FONT-SIZE: 9pt; LINE-HEIGHT: 24px; FONT-FAMILY: "宋体"
+}
+.text2 {
+	FONT-SIZE: 9pt; COLOR: #0044a9; LINE-HEIGHT: 24px; FONT-FAMILY: "宋体"
+}
+.text7 {
+	FONT-SIZE: 9pt; COLOR: #800080; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+.text8 {
+	FONT-SIZE: 9pt; COLOR: #c75001; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+.text9 {
+	FONT-SIZE: 9pt; COLOR: #ffffff; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+P {
+	FONT-SIZE: 9pt; TEXT-ALIGN: center
+}
+TD {
+	FONT-SIZE: 9pt
+}
+TR {
+	FONT-SIZE: 9pt
+}
+.time {
+	FONT-SIZE: 9pt; COLOR: #c6c6c6
+}
+BODY {
+	SCROLLBAR-FACE-COLOR: #ffffff;
+	FONT-SIZE: 9pt; 
+	SCROLLBAR-HIGHLIGHT-COLOR: #cccccc; 
+	SCROLLBAR-SHADOW-COLOR: #cccccc; 
+	SCROLLBAR-3DLIGHT-COLOR: #ffffff; 
+	SCROLLBAR-ARROW-COLOR: #1890cc; 
+	SCROLLBAR-TRACK-COLOR: #ffffff; 
+	FONT-FAMILY: "宋体"; 
+	SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+}
+.submit {
+	FONT-SIZE: 9pt; BORDER-TOP-STYLE: ridge; BORDER-RIGHT-STYLE: ridge; BORDER-LEFT-STYLE: ridge; BORDER-BOTTOM-STYLE: ridge
+}
+iinput {
+	BORDER-RIGHT: #fff5e8 1px solid; BORDER-TOP: #333333 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: #333333 1px solid; BORDER-BOTTOM: #fff5e8 1px solid; FONT-FAMILY: "宋体"
+}
+.fix {
+	BACKGROUND-POSITION: center bottom; FONT-SIZE: 9px; BACKGROUND-ATTACHMENT: fixed; BACKGROUND-REPEAT: no-repeat
+}
+.formbbs {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid
+}
+.style2 {
+	COLOR: #00ffff
+}
+TABLE {
+	BACKGROUND-POSITION: center center
+}
+IMG {
+	CURSOR: hand
+}
+
+.headtd1 {  background: #00A4E1; border: 2px outset; border-color: #00BBFF #0077FF #0077FF #00BBFF; cursor: hand; font-size: 9pt}.headtd2 {  background: #20C1FF; border: 2px outset; border-color: #60D3FF #0077FF #0077FF #60D3FF; cursor: hand; font-size: 9pt}
+.bodytd  {  font-size: 9pt}
+.bodytd1  { font-size: 9pt}
+.titleStyle{
+background-color:#00A4E1;border: 2px outset;color:#ffffff;border-top:1px solid #FFFFFF;font-size:9pt;cursor:hand;
+}
+.contentStyle{
+background-color:#eeffee;color:blue;font-size:9pt;
+}
+a{
+color:blue;
+}
+.style3 {
+	background-color: #00A4E1;
+	color: #ffffff;
+	border-top: 1px solid #FFFFFF;
+	font-size: 9pt;
+	cursor: hand;
+	text-align: left;
+}
+.style4 {
+	background-color: #eeffee;
+	color: blue;
+	font-size: 9pt;
+	text-align: right;
+}
+
+.h1 {
+	font-family: "宋体";
+	font-size: 16px;
+	font-weight: bold;
+	color: #0000FF;
+	text-decoration: none;
+}
+.h1 a {
+	font-family: "宋体";
+	font-size: 16px;
+	font-weight: bolder;
+	color: #0000FF;
+	text-decoration: underline;
+}
+.h1 a:hover {
+	font-family: "宋体";
+	font-size: 16px;
+	font-weight: bolder;
+	color: #0000FF;
+}
+
