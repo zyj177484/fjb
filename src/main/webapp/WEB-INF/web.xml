@@ -11,7 +11,9 @@
           /WEB-INF/ContextLoaderListener.xml
     	</param-value>
 	</context-param>
-	
+	<welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+  	</welcome-file-list>
 	<!-- 解决POST方式造成的中文乱码 -->
 	<filter>  
     	<filter-name>CharacterEncodingFilter</filter-name>  

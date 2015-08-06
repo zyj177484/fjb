@@ -67,15 +67,15 @@ color=#ff0000><strong>总行应知准考证，身份证，</font>迟到缺考没
           </td>
         </tr>
       </table>
-	  <form id="login_form" name="login_form" method="post" action="check_pass.jsp">
+	  <form id="login_form" name="login_form" method="post" action="loginCheck">
       <table width="800" border="0" cellspacing="0" cellpadding="3">
         <tr>
           <td width="264" valign="middle"><div align="right"><span class="STYLE4">身份证号</span>&nbsp;</div></td>
-          <td width="133"><input name="idcard" type="text" id="idcard" size="18" /></td>
+          <td width="133"><input name="id" type="text" id="idcard" size="18" /></td>
         </tr>
         <tr>
           <td width="264" valign="middle"><div align="right"><span class="STYLE4">密码</span>&nbsp;</div></td>
-          <td width="133"><input name="pwd" type="password" id="pwd" size="18" /></td>
+          <td width="133"><input name="password" type="password" id="pwd" size="18" /></td>
           <td width="345" class="login">
             <input type="image" class="login"  src="images/button_jr.gif" value="进入考试系统" /></td>
         </tr>
