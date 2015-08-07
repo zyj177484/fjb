@@ -44,7 +44,9 @@
 </script>
 </head>
 <body style="background-image: url(images/mainbgimg.gif);background-repeat:repeat-x;margin-top: 0px;">
-
+<c:if test="${message != null}" >
+<br/>${message }</a>
+</c:if>
 <table width="760" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="10">&nbsp;</td>

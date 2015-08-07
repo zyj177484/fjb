@@ -2,15 +2,16 @@ package com.jeff.fjb.dal.entity;
 
 public class PracticeEntity {
 	private int id;
-	private String question;
-	private String answer;
+	private String question =null;
+	private String answer = null;
 	private int type;
-	private String A;
-	private String B;
-	private String C;
-	private String D;
-	private String E;
-	private byte[] photo;
+	private String A = null;
+	private String B = null;
+	private String C = null;
+	private String D = null;
+	private String E = null;
+	private String photo_url = null;
+	private byte[] photo = null;
 	
 	public PracticeEntity(){}
 	
@@ -25,6 +26,15 @@ public class PracticeEntity {
 		D = d;
 		E = e;
 	}
+	
+	public String getPhoto_url() {
+		return photo_url;
+	}
+
+	public void setPhoto_url(String photo_url) {
+		this.photo_url = photo_url;
+	}
+
 	public byte[] getPhoto() {
 		return photo;
 	}

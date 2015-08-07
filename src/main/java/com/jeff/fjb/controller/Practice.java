@@ -2,6 +2,7 @@ package com.jeff.fjb.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
 
@@ -80,7 +81,7 @@ public class Practice {
 					question.addProperty("type", type);
 					question.addProperty("id", id);
 					result.add(question);
-					ids.set(index, ids.get(ids.size() - no));
+					ids.set(index, ids.get(ids.size() - no - 1));
 				}
 			} else
 				return null;
@@ -96,12 +97,12 @@ public class Practice {
 			JsonArray questionArray = genPractice();
 			session.setAttribute("questionArray", questionArray.toString());
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("test/practice");
+			mv.setViewName("practice");
 			return mv;
 		} else
 			return preCheckResult;
 	}
-	
+
 	@RequestMapping(value = "/getQuestionPhoto")
 	@ResponseBody
 	public void showImage(HttpServletRequest request, HttpServletResponse response) {
@@ -118,7 +119,7 @@ public class Practice {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (os!=null)
+			if (os != null)
 				try {
 					os.close();
 				} catch (IOException e) {
@@ -127,35 +128,51 @@ public class Practice {
 				}
 		}
 	}
-	
+
+	// @RequestMapping(value = "/getQuestion", produces = "plain/text;
+	// charset=UTF-8")
 	@RequestMapping(value = "/getQuestion")
 	@ResponseBody
-	public String getQuestion(HttpServletRequest request) {
+	public void getQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ModelAndView preCheckResult = preCheck(request.getSession());
 		HttpSession session = request.getSession();
+		response.setHeader("Cache-Control", "no-cache");
+		response.setContentType("text/plain;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
 		if (preCheckResult == null) {
 			if (request.getParameter("no") != null) {
 				try {
 					int no = Integer.valueOf(request.getParameter("no"));
-					if (session.getAttribute("questionArray")!=null) {
-						JsonArray questionArray = new JsonParser().parse(session.getAttribute("questionArray").toString()).getAsJsonArray();
-						int id = questionArray.get(no-1).getAsJsonObject().get("id").getAsInt();
-						int type = questionArray.get(no-1).getAsJsonObject().get("type").getAsInt();
+					if (session.getAttribute("questionArray") != null) {
+						JsonArray questionArray = new JsonParser()
+								.parse(session.getAttribute("questionArray").toString()).getAsJsonArray();
+						int id = questionArray.get(no - 1).getAsJsonObject().get("id").getAsInt();
+						int type = questionArray.get(no - 1).getAsJsonObject().get("type").getAsInt();
 						PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
-						return new Gson().toJson(practiceEntity);
+						if (practiceEntity != null) {
+							practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+							out.write(new Gson().toJson(practiceEntity));
+						} else {
+							JsonObject object = new JsonObject();
+							object.addProperty("type", "0");
+							object.addProperty("message", "该题不存在");
+							object.addProperty("view", "user/dashboard");
+							out.write(object.toString());
+						}
 					} else {
 						JsonObject object = new JsonObject();
 						object.addProperty("type", "0");
 						object.addProperty("message", "请点击开始练习");
 						object.addProperty("view", "login");
-						return object.toString();
+						out.write(object.toString());
 					}
 				} catch (Exception e) {
 					JsonObject object = new JsonObject();
 					object.addProperty("type", "0");
 					object.addProperty("message", "输入题号不存在");
 					object.addProperty("view", "login");
-					return object.toString();
+					out.write(object.toString());
 				}
 			} else if (request.getParameter("id") != null && request.getParameter("type") != null) {
 				try {
@@ -163,34 +180,34 @@ public class Practice {
 					int type = Integer.valueOf(request.getParameter("type"));
 					PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
 					if (practiceEntity != null)
-						return new Gson().toJson(practiceEntity);
+						out.write(new Gson().toJson(practiceEntity));
 					else {
 						JsonObject object = new JsonObject();
 						object.addProperty("type", "0");
 						object.addProperty("message", "该题不存在");
 						object.addProperty("view", "login");
-						return object.toString();
+						out.write(object.toString());
 					}
 				} catch (Exception e) {
 					JsonObject object = new JsonObject();
 					object.addProperty("type", "0");
 					object.addProperty("message", "id或者type格式不对");
 					object.addProperty("view", "login");
-					return object.toString();
+					out.write(object.toString());
 				}
 			} else {
 				JsonObject object = new JsonObject();
 				object.addProperty("type", "0");
 				object.addProperty("message", "请输入题号");
 				object.addProperty("view", "login");
-				return object.toString();
+				out.write(object.toString());
 			}
 		} else {
 			JsonObject object = new JsonObject();
 			object.addProperty("type", "0");
 			object.addProperty("message", preCheckResult.getModel().get("message").toString());
 			object.addProperty("view", preCheckResult.getViewName());
-			return object.toString();
+			out.write(object.toString());
 		}
 	}
 }

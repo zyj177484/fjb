@@ -16,7 +16,7 @@
 	<select id="getPracticeEntity" resultMap="PracticeResult">
 		SELECT id, question, answer, type, A, B, C, D FROM practice WHERE id=#{id} AND type=#{type}
 	</select>
-	<select id="getIDByType">
+	<select id="getIDByType" resultType = "Integer">
 		SELECT id FROM practice WHERE type=#{type}
 	</select>
 	<select id="getPhoto" resultMap="PracticeResult">
