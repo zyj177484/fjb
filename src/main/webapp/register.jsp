@@ -2925,11 +2925,11 @@ ${message }
 	      <td><input type="file" Name="photo" id="photo" value="默认值" ></td>
 
       </tr>
-      <tr>
+<!--       <tr>
         <td>&nbsp;</td>
         <td><input type="submit" name="submit"  id="submit" value="确认注册" >
           <input type="reset" name="submit2" value="重 置"></td>
-      </tr>
+      </tr> -->
     </tbody></table>
 	</form>
 	</td>
