@@ -81,3 +81,20 @@ jsp页面中样例<img src="getQuestion?id=12&type=3" />
 
 2015.08.06####################
 运行createTable.sql及data.sql导入数据库
+
+2015.08.11####################
+http://localhost:8080/fjb/getBank
+type 0:表示出错，请弹出提示信息message，并跳转到view页面
+{"type":"0","message":"请输入银行类型","view":"user/dashboard"}
+
+获取所有总行
+http://localhost:8080/fjb/getBank?type=zonghang
+[{"id":"B0003H111000001","name":"中国银行股份有限公司"}]
+
+获取中国银行的所有分行
+http://localhost:8080/fjb/getBank?type=fenhang&zonghangid=B0003H111000001
+[{"id":"B0003B231000001","name":"中国银行股份有限公司上海市分行"}]
+
+获取上海分行的所有支行
+http://localhost:8080/fjb/getBank?type=zhihang&fenhangid=B0003B231000001
+[{"id":"B0003S231000233","name":"中国银行股份有限公司上海市枫泾支行"}]

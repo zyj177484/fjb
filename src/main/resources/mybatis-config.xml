@@ -5,6 +5,7 @@
 	<typeAliases>
 		<typeAlias alias="User" type="com.jeff.fjb.dal.entity.UserEntity" />
 		<typeAlias alias="Practice" type="com.jeff.fjb.dal.entity.PracticeEntity" />
+		<typeAlias alias="Bank" type="com.jeff.fjb.dal.entity.BankEntity" />
 	</typeAliases>
 	<environments default="prod">
 		<environment id="prod">

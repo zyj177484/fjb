@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeff.fjb.dal.mappers.BankMapper">
+	<resultMap id="ZonghangResult" type="Bank">     
+    	<id property="id" column="id"/>     
+    	<result property="name" column="name"/>  
+    	<result property="address" column="address" />  
+	</resultMap>
+	<resultMap id="FenhangResult" type="Bank">     
+    	<id property="id" column="id"/>     
+    	<result property="boss" column="zonghangid"/>  
+    	<result property="name" column="name"/> 
+    	<result property="address" column="address" />
+    	<result property="contactPeople" column="contactPeople" />
+    	<result property="phone" column="phone" />
+    	<result property="email" column="email" />
+	</resultMap> 
+	<resultMap id="ZhihangResult" type="Bank">     
+    	<id property="id" column="id"/>     
+    	<result property="boss" column="fenhangid"/>  
+    	<result property="name" column="name"/> 
+    	<result property="address" column="address" />
+    	<result property="contactPeople" column="contactPeople" />
+    	<result property="phone" column="phone" />
+    	<result property="email" column="email" />
+	</resultMap> 
+	<select id="getAllZonghang" resultMap="ZonghangResult">
+		SELECT * FROM zonghang 
+	</select>
+	<select id="getAllFenhang" parameterType="String" resultMap="FenhangResult">
+		SELECT * FROM fenhang WHERE zonghangid = #{zonghangid} 
+	</select>
+	<select id="getAllZhihang" parameterType="String" resultMap="ZhihangResult">
+		SELECT * FROM zhihang WHERE fenhangid = #{fenhangid}
+	</select>
+</mapper>
