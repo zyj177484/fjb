@@ -98,3 +98,5 @@ http://localhost:8080/fjb/getBank?type=fenhang&zonghangid=B0003H111000001
 获取上海分行的所有支行
 http://localhost:8080/fjb/getBank?type=zhihang&fenhangid=B0003B231000001
 [{"id":"B0003S231000233","name":"中国银行股份有限公司上海市枫泾支行"}]
+
+提交的总行，分行，支行请提交id。给用户看name。
