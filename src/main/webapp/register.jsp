@@ -2643,13 +2643,14 @@ subval3[1178] = new Array('0009555801','000955580150','周浦支行');
 
 	var imageOk =false;
 
-	$("#photo").change(function(){
+<%--	$("#photo").change(function(){
 
 	    imageOk = false;
 	    if(checkImgType(this))
 		imageOk = true;
 	    //checkImgPX(this,150,210);  //判断图片大小服务器后台做 
 	});
+	--%>
 
  function checkSubmit() {
             var result = false;
@@ -2671,8 +2672,8 @@ subval3[1178] = new Array('0009555801','000955580150','周浦支行');
                 alert('两次密码填写不一致');
 //            else if (!$('#mail').val())
  //               alert('请填写邮箱');
-            else if (!imageOk)
-                alert('请上传照片');
+//            else if (!imageOk)    //move to uploadPhoto.jsp
+ //               alert('请上传照片');
             else
                 result = true;
             return result;
@@ -2920,16 +2921,17 @@ ${message }
         <td><div align="right">Email</div></td>
         <td><input name="mail" type="text" id="mail" size="20"></td>
       </tr>
-      <tr>
+    <%--  <tr>
 	      <td><div align="right">个人照片<font color="red">*</font></div></td>
 	      <td><input type="file" Name="photo" id="photo" value="默认值" ></td>
 
       </tr>
-<!--       <tr>
+      --%>
+<tr>
         <td>&nbsp;</td>
         <td><input type="submit" name="submit"  id="submit" value="确认注册" >
           <input type="reset" name="submit2" value="重 置"></td>
-      </tr> -->
+      </tr>
     </tbody></table>
 	</form>
 	</td>
