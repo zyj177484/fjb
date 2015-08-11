@@ -61,7 +61,8 @@
 
 				//ajax get question by No.
 				function update_question(id){
-					$.getJSON(id+".txt", function(json){
+					//$.getJSON(id+".txt", function(json){
+					$.getJSON("getQuestion?no="+id, function(json){
 						<!--alert("json");-->
 						var type,question,no,answer,photo_url;
 						type = json["type"];
