@@ -26,7 +26,7 @@ import com.jeff.fjb.dal.service.UserService;
 import com.jeff.fjb.util.MagicNum;
 
 @Controller
-public class Practice {
+public class PracticeController {
 
 	private UserService userService = new UserService();
 	private PracticeService practiceService = new PracticeService();
@@ -151,7 +151,10 @@ public class Practice {
 						int type = questionArray.get(no - 1).getAsJsonObject().get("type").getAsInt();
 						PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
 						if (practiceEntity != null) {
-							practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+							if (!practiceEntity.getHasPhoto().equals("false"))
+								practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+							else 
+								practiceEntity.setPhoto_url(null);
 							out.write(new Gson().toJson(practiceEntity));
 						} else {
 							JsonObject object = new JsonObject();
@@ -179,9 +182,13 @@ public class Practice {
 					int id = Integer.valueOf(request.getParameter("id"));
 					int type = Integer.valueOf(request.getParameter("type"));
 					PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
-					if (practiceEntity != null)
+					if (practiceEntity != null) {
+						if (!practiceEntity.getHasPhoto().equals("false"))
+							practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+						else 
+							practiceEntity.setPhoto_url(null);
 						out.write(new Gson().toJson(practiceEntity));
-					else {
+					} else {
 						JsonObject object = new JsonObject();
 						object.addProperty("type", "0");
 						object.addProperty("message", "该题不存在");

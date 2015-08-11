@@ -10,6 +10,7 @@ public class PracticeEntity {
 	private String C = null;
 	private String D = null;
 	private String E = null;
+	private String hasPhoto = null; 
 	private String photo_url = null;
 	private byte[] photo = null;
 	
@@ -26,7 +27,15 @@ public class PracticeEntity {
 		D = d;
 		E = e;
 	}
-	
+
+	public String getHasPhoto() {
+		return hasPhoto;
+	}
+
+	public void setHasPhoto(String hasPhoto) {
+		this.hasPhoto = hasPhoto;
+	}
+
 	public String getPhoto_url() {
 		return photo_url;
 	}
