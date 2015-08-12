@@ -183,6 +183,7 @@ public class LoginAndRegisterController {
 
 	@RequestMapping(value = "/registerCheck", method = RequestMethod.POST)
 	public ModelAndView register(HttpServletRequest request) {
+		//TODO logic check
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		String id = request.getParameter("id");
