@@ -2739,7 +2739,7 @@ ${message }
 <table width="760" border="0" align="center" cellpadding="5" cellspacing="0">
   <tbody><tr>
     <td>
-	<form id="register_form" action="registerCheck.jsp" method="post">  
+	<form id="register_form" action="registerCheck" method="post">  
 	<table width="760" border="0" cellspacing="0" cellpadding="3">
       <tbody><tr>
         <td width="204"><div align="right">姓名</div></td>
