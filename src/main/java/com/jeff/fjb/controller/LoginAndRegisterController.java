@@ -243,10 +243,15 @@ public class LoginAndRegisterController {
 				session.setAttribute("username", userEntity.getUsername());
 				session.setAttribute("password", userEntity.getPassword());
 				session.setAttribute("practice", userEntity.getPractice());
-				if (userService.getPhoto(id).getPhoto() == null && userEntity.getRole().equals("user")) 
-					mv.setViewName("redirect:/uploadPhoto");
-				else
-					mv.setViewName("redirect:/login");
+				session.setAttribute("role", userEntity.getRole());
+				if (userEntity.getRole().equals("admin")) 
+					mv.setViewName("redirect:/admin/login");
+				else {
+					if (userService.getPhoto(id).getPhoto() == null && userEntity.getRole().equals("user")) 
+						mv.setViewName("redirect:/uploadPhoto");
+					else
+						mv.setViewName("redirect:/login");
+				}
 			} else {
 				mv.addObject("message", "账号或者密码错误");
 				mv.setViewName("index");
