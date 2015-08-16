@@ -248,9 +248,11 @@ public class LoginAndRegisterController {
 				if (userEntity.getRole().equals("admin")) 
 					mv.setViewName("redirect:/admin/login");
 				else {
-					if (userService.getPhoto(id).getPhoto() == null && userEntity.getRole().equals("user")) 
+					System.out.println(userEntity.getRole());
+					UserEntity photoEntity = userService.getPhoto(id);
+					if (photoEntity==null || photoEntity.getPhoto() == null) 
 						mv.setViewName("redirect:/uploadPhoto");
-					else
+					else 
 						mv.setViewName("redirect:/login");
 				}
 			} else {

@@ -70,4 +70,12 @@ public class UserService {
 			sqlSession.close();
 		}
 	}
+	
+	public  static void main(String[] args){
+		UserService service = new UserService();
+		if (service.getPhoto("123") != null)
+			System.out.println("yes");
+		else 
+			System.out.println("no");
+	}
 }
