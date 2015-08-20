@@ -8,6 +8,19 @@ public class BankEntity {
 	String contactPeople;
 	String phone;
 	String email;
+	public BankEntity(){}
+	
+	public BankEntity(String id, String boss, String name, String address, String contactPeople, String phone,
+			String email) {
+		super();
+		this.id = id;
+		this.boss = boss;
+		this.name = name;
+		this.address = address;
+		this.contactPeople = contactPeople;
+		this.phone = phone;
+		this.email = email;
+	}
 	public String getId() {
 		return id;
 	}

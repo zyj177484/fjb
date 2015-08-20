@@ -16,6 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `fenhang`
+--
+
+DROP TABLE IF EXISTS `fenhang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fenhang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `zonghangid` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`,`zonghangid`),
+  KEY `id_idx` (`zonghangid`),
+  CONSTRAINT `fenhangFK` FOREIGN KEY (`zonghangid`) REFERENCES `zonghang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `practice`
 --
 
@@ -37,6 +58,72 @@ CREATE TABLE `practice` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `role` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `sessionId` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `photo` mediumblob,
+  `sex` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `zonghang` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fenhang` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zhihang` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `fenlichu` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mail` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `practice` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `zhihang`
+--
+
+DROP TABLE IF EXISTS `zhihang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zhihang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `fenhangid` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`,`fenhangid`),
+  KEY `id_idx` (`fenhangid`),
+  CONSTRAINT `zhihangFK` FOREIGN KEY (`fenhangid`) REFERENCES `fenhang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `zonghang`
+--
+
+DROP TABLE IF EXISTS `zonghang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zonghang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -47,4 +134,4 @@ CREATE TABLE `practice` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-12 23:36:45
+-- Dump completed on 2015-08-21  1:05:00

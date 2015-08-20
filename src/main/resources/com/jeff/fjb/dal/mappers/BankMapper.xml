@@ -5,7 +5,10 @@
 	<resultMap id="ZonghangResult" type="Bank">     
     	<id property="id" column="id"/>     
     	<result property="name" column="name"/>  
-    	<result property="address" column="address" />  
+    	<result property="address" column="address" /> 
+    	<result property="contactPeople" column="contactPeople" />
+    	<result property="phone" column="phone" />
+    	<result property="email" column="email" /> 
 	</resultMap>
 	<resultMap id="FenhangResult" type="Bank">     
     	<id property="id" column="id"/>     
@@ -34,4 +37,20 @@
 	<select id="getAllZhihang" parameterType="String" resultMap="ZhihangResult">
 		SELECT * FROM zhihang WHERE fenhangid = #{fenhangid}
 	</select>
+	
+	<insert id="addZonghang" parameterType="Bank">
+		INSERT INTO zonghang (id, name, address, phone, email, contactPeople)
+		VALUES (#{id}, #{name}, #{address}, #{phone}, #{email}, #{contactPeople})
+	</insert>
+	
+	<insert id="addFenhang" parameterType="Bank">
+		INSERT INTO zonghang (id, zonghangid, name, address, phone, email, contactPeople)
+		VALUES (#{id}, #{boss}, #{name}, #{address}, #{phone}, #{email}, #{contactPeople})
+	</insert>
+
+	<insert id="addZhihang" parameterType="Bank">
+		INSERT INTO zonghang (id, fenhangid, name, address, phone, email, contactPeople)
+		VALUES (#{id}, #{boss}, #{name}, #{address}, #{phone}, #{email}, #{contactPeople})
+	</insert>
+	
 </mapper>

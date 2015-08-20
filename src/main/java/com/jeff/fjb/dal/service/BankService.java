@@ -1,5 +1,6 @@
 package com.jeff.fjb.dal.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,13 +41,50 @@ public class BankService {
 		}
 	}
 	
+	public void addZonghang(BankEntity bankEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			BankMapper bankMapper = sqlSession.getMapper(BankMapper.class);
+			bankMapper.addZonghang(bankEntity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public void addFenhang(BankEntity bankEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			BankMapper bankMapper = sqlSession.getMapper(BankMapper.class);
+			bankMapper.addFenhang(bankEntity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public void addZhihang(BankEntity bankEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			BankMapper bankMapper = sqlSession.getMapper(BankMapper.class);
+			bankMapper.addZhihang(bankEntity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 	public static void main(String[] args) {
 		BankService service = new BankService();
-		List<BankEntity> bankEntities = service.getAllZonghang();
-		System.out.println(bankEntities.get(0).getId() + ":" + bankEntities.get(0).getName());
-		bankEntities = service.getAllFenhang(bankEntities.get(0).getId());
-		System.out.println(bankEntities.get(0).getId() + ":" + bankEntities.get(0).getName());
-		bankEntities = service.getAllZhihang(bankEntities.get(0).getId());
-		System.out.println(bankEntities.get(0).getId() + ":" + bankEntities.get(0).getName());
+		BankEntity entity = new BankEntity();
+		entity.setId("B0003H111000001");
+		entity.setName("中国银行股份有限公司2");
+		try {
+			service.addZonghang(entity);
+		} catch (Exception e) {
+			System.out.println("here");
+			e.printStackTrace();
+		}
+		System.out.println("there");
 	}
 }

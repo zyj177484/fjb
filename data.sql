@@ -51,7 +51,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `zonghang` WRITE;
 /*!40000 ALTER TABLE `zonghang` DISABLE KEYS */;
-INSERT INTO `zonghang` VALUES ('B0003H111000001','中国银行股份有限公司','北京市复兴门内大街1号');
+INSERT INTO `zonghang` VALUES ('123a','上海银行','','','',''),('B0003H111000001','中国银行股份有限公司','北京市复兴门内大街1号',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `zonghang` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -64,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-11 11:05:46
+-- Dump completed on 2015-08-21  1:05:31

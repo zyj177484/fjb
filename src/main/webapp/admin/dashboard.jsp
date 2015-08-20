@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="admin/addBank">增加考试单位</a>
+<a href="addBank">增加考试单位</a>
 </body>
 </html>
