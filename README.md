@@ -100,3 +100,12 @@ http://localhost:8080/fjb/getBank?type=zhihang&fenhangid=B0003B231000001
 [{"id":"B0003S231000233","name":"中国银行股份有限公司上海市枫泾支行"}]
 
 提交的总行，分行，支行请提交id。给用户看name。
+
+2015.08.21####################
+增加银行完成
+重新createTable。data.sql中有练习题及部分银行和用户测试数据
+
+admin用户登录后 跳转至admin/dashboard.jsp
+点击增加银行 跳转至admin/addBank.jsp
+
+addBank详细修改内容，请至页面看。

@@ -15,6 +15,7 @@
 
 添加银行
 获取银行信息同注册页面相同。
+可设置一个点选按钮，给用户选择每次要添加总行，分行或者支行。用ajax动态加载对应的上级银行。
 <form action="addBankCheck/zonghang" method="post">
 添加总行:<br/>
 *总行名称:<input name="name" type="text" /><br/>
@@ -28,7 +29,7 @@ Email:<input name="email" type="text" /><br/>
 <br/>
 <form action="addBankCheck/fenhang" method="post">
 添加分行:<br/>
-*总行编码（通过api取出所有的总行名称及id，显示给用户总行名称，传递总行id）:<input name="zonghangid" type="text" /><br/>
+*总行编码（用ajax,通过api取出所有的总行名称及id，显示给用户总行名称，传递总行id）:<input name="zonghangid" type="text" /><br/>
 *分行名称:<input name="name" type="text" /><br/>
 *分行编码:<input name="id" type="text" /><br/>
 地址:<input name="address" type="text" /><br/>
@@ -40,7 +41,7 @@ Email:<input name="email" type="text" /><br/>
 <br/>
 <form action="addBankCheck/zhihang" method="post">
 添加分行:<br/>
-*分行编码（通过api取出所有的分行名称及id，显示给用户总行名称，传递总行id）:<input name="fenhangid" type="text" /><br/>
+*分行编码（用ajax,通过api取出所有的分行名称及id，显示给用户总行名称，传递总行id）:<input name="fenhangid" type="text" /><br/>
 *支行名称:<input name="name" type="text" /><br/>
 *支行编码:<input name="id" type="text" /><br/>
 地址:<input name="address" type="text" /><br/>
