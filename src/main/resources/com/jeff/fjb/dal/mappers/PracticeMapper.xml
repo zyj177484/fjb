@@ -15,13 +15,13 @@
     	<result property="hasPhoto" column="hasPhoto"/>
 	</resultMap> 
 	<select id="getPracticeEntity" resultMap="PracticeResult">
-		SELECT id, question, answer, type, A, B, C, D, hasPhoto FROM practice WHERE id=#{id} AND type=#{type}
+		SELECT id, question, answer, type, A, B, C, D, hasPhoto FROM practice WHERE id=#{id}
 	</select>
 	<select id="getIDByType" resultType = "Integer">
 		SELECT id FROM practice WHERE type=#{type}
 	</select>
 	<select id="getPhoto" resultMap="PracticeResult">
-		SELECT photo FROM practice WHERE id=#{id} AND type=#{type}
+		SELECT photo FROM practice WHERE id=#{id}
 	</select>
 	<insert id="insertPracticeEntity">
 		INSERT INTO practice 

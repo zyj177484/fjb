@@ -9,21 +9,21 @@ import com.jeff.fjb.dal.mappers.PracticeMapper;
 import com.jeff.fjb.dal.util.MyBatisSqlSessionFactory;
 
 public class PracticeService {
-	public PracticeEntity getPracticeEntity(int id, int type) {
+	public PracticeEntity getPracticeEntity(int id) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PracticeMapper practiceMapper = sqlSession.getMapper(PracticeMapper.class);
-			return practiceMapper.getPracticeEntity(id, type);
+			return practiceMapper.getPracticeEntity(id);
 		} finally {
 			sqlSession.close();
 		}
 	}
 
-	public PracticeEntity getPhoto(int id, int type) {
+	public PracticeEntity getPhoto(int id) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PracticeMapper practiceMapper = sqlSession.getMapper(PracticeMapper.class);
-			return practiceMapper.getPhoto(id, type);
+			return practiceMapper.getPhoto(id);
 		} finally {
 			sqlSession.close();
 		}

@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.jeff.fjb.dal.entity.PracticeEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
 import com.jeff.fjb.dal.service.PracticeService;
@@ -77,10 +78,7 @@ public class PracticeController {
 				for (int no = 0; no < MagicNum.TYPE_MAP_QUESTION_NUM[type]; no++) {
 					int index = random.nextInt(ids.size() - no);
 					int id = ids.get(index);
-					JsonObject question = new JsonObject();
-					question.addProperty("type", type);
-					question.addProperty("id", id);
-					result.add(question);
+					result.add(new JsonPrimitive(id));
 					ids.set(index, ids.get(ids.size() - no - 1));
 				}
 			} else
@@ -108,11 +106,10 @@ public class PracticeController {
 	public void showImage(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("image/gif");
 		int id = Integer.valueOf(request.getParameter("id"));
-		int type = Integer.valueOf(request.getParameter("type"));
 		OutputStream os = null;
 		try {
 			os = response.getOutputStream();
-			byte[] photo = practiceService.getPhoto(id, type).getPhoto();
+			byte[] photo = practiceService.getPhoto(id).getPhoto();
 			os.write(photo);
 			os.flush();
 		} catch (IOException e) {
@@ -147,14 +144,14 @@ public class PracticeController {
 					if (session.getAttribute("questionArray") != null) {
 						JsonArray questionArray = new JsonParser()
 								.parse(session.getAttribute("questionArray").toString()).getAsJsonArray();
-						int id = questionArray.get(no - 1).getAsJsonObject().get("id").getAsInt();
-						int type = questionArray.get(no - 1).getAsJsonObject().get("type").getAsInt();
-						PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
+						int id = questionArray.get(no - 1).getAsInt();
+						PracticeEntity practiceEntity = practiceService.getPracticeEntity(id);
 						if (practiceEntity != null) {
 							if (!practiceEntity.getHasPhoto().equals("false"))
-								practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+								practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id);
 							else 
 								practiceEntity.setPhoto_url(null);
+							practiceEntity.setNo(no);
 							out.write(new Gson().toJson(practiceEntity));
 						} else {
 							JsonObject object = new JsonObject();
@@ -177,14 +174,13 @@ public class PracticeController {
 					object.addProperty("view", "login");
 					out.write(object.toString());
 				}
-			} else if (request.getParameter("id") != null && request.getParameter("type") != null) {
+			} else if (request.getParameter("id") != null) {
 				try {
 					int id = Integer.valueOf(request.getParameter("id"));
-					int type = Integer.valueOf(request.getParameter("type"));
-					PracticeEntity practiceEntity = practiceService.getPracticeEntity(id, type);
+					PracticeEntity practiceEntity = practiceService.getPracticeEntity(id);
 					if (practiceEntity != null) {
 						if (!practiceEntity.getHasPhoto().equals("false"))
-							practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id + "&type" + type);
+							practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id);
 						else 
 							practiceEntity.setPhoto_url(null);
 						out.write(new Gson().toJson(practiceEntity));
@@ -198,7 +194,7 @@ public class PracticeController {
 				} catch (Exception e) {
 					JsonObject object = new JsonObject();
 					object.addProperty("type", "0");
-					object.addProperty("message", "id或者type格式不对");
+					object.addProperty("message", "id不对");
 					object.addProperty("view", "login");
 					out.write(object.toString());
 				}

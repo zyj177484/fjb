@@ -13,7 +13,16 @@ public class PracticeEntity {
 	private String hasPhoto = null; 
 	private String photo_url = null;
 	private byte[] photo = null;
+	private int no;
 	
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
 	public PracticeEntity(){}
 	
 	public PracticeEntity(int id, String question, String answer, int type, String a, String b, String c, String d, String e) {
