@@ -16,6 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `examine_distinct`
+--
+
+DROP TABLE IF EXISTS `examine_distinct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_distinct` (
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `examine_room`
+--
+
+DROP TABLE IF EXISTS `examine_room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_room` (
+  `examineDistinct` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `num` int(11) NOT NULL,
+  PRIMARY KEY (`examineDistinct`,`name`),
+  CONSTRAINT `room_distinct` FOREIGN KEY (`examineDistinct`) REFERENCES `examine_distinct` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `fenhang`
 --
 
@@ -55,7 +85,7 @@ CREATE TABLE `practice` (
   `photo` mediumblob,
   `E` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `hasPhoto` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'false',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,4 +164,4 @@ CREATE TABLE `zonghang` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-21  1:05:00
+-- Dump completed on 2015-08-23 22:32:09

@@ -208,7 +208,7 @@ public class LoginAndRegisterController {
 			mv.setViewName("redirect:/uploadPhoto");
 		} else {
 			mv.addObject("message", "该用户已经存在");
-			mv.setViewName("register");
+			mv.setViewName("redirect:/register");
 		}
 		return mv;
 	}
@@ -245,7 +245,7 @@ public class LoginAndRegisterController {
 				session.setAttribute("password", userEntity.getPassword());
 				session.setAttribute("practice", userEntity.getPractice());
 				session.setAttribute("role", userEntity.getRole());
-				if (userEntity.getRole().equals("admin")) 
+				if (userEntity.getRole().equals("admin"))
 					mv.setViewName("redirect:/admin/login");
 				else {
 					System.out.println(userEntity.getRole());

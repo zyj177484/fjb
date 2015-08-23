@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeff.fjb.dal.mappers.ExamineRoomMapper">
+	<insert id="insertExamineDistinct" parameterType="ExamineDistinct">
+		INSERT INTO examine_distinct
+		(name, address)
+		values (#{name}, #{address});
+	</insert>
+	<insert id="insertExamineRoom" parameterType="ExamineRoom">
+		INSERT INTO examine_room
+		(examineDistinct, name, num)
+		values (#{examineDistinct}, #{name}, #{num});
+	</insert>
+	<select id="getAllExamineDistinct" resultType="ExamineDistinct">
+		SELECT * FROM examine_distinct;
+	</select>
+</mapper>

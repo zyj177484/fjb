@@ -16,6 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Dumping data for table `examine_distinct`
+--
+
+LOCK TABLES `examine_distinct` WRITE;
+/*!40000 ALTER TABLE `examine_distinct` DISABLE KEYS */;
+INSERT INTO `examine_distinct` VALUES ('上海浦东校区考点','上海金融学院上海市上川路995号'),('测试考点','测试地址');
+/*!40000 ALTER TABLE `examine_distinct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `examine_room`
+--
+
+LOCK TABLES `examine_room` WRITE;
+/*!40000 ALTER TABLE `examine_room` DISABLE KEYS */;
+INSERT INTO `examine_room` VALUES ('测试考点','测试考场',20);
+/*!40000 ALTER TABLE `examine_room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `fenhang`
 --
 
@@ -64,4 +84,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-21  1:05:31
+-- Dump completed on 2015-08-23 22:32:53

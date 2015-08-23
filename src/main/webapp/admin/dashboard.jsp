@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="addBank">增加考试单位</a>
+${message }<br/>
+<a href="addBank">增加考试单位</a><br/>
+<a href="addExaminationRoom">增加考场</a>
 </body>
 </html>
