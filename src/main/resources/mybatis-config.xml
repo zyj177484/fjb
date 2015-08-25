@@ -8,6 +8,7 @@
 		<typeAlias alias="Bank" type="com.jeff.fjb.dal.entity.BankEntity" />
 		<typeAlias alias="ExamineDistinct" type="com.jeff.fjb.dal.entity.ExamineDistinctEntity" />
 		<typeAlias alias="ExamineRoom" type="com.jeff.fjb.dal.entity.ExamineRoomEntity" />		
+		<typeAlias alias="ExamineSubject" type="com.jeff.fjb.dal.entity.ExamineSubjectEntity" />
 	</typeAliases>
 	<environments default="prod">
 		<environment id="prod">

@@ -1,6 +1,10 @@
 package com.jeff.fjb.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,9 +19,11 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.jeff.fjb.dal.entity.BankEntity;
 import com.jeff.fjb.dal.entity.ExamineDistinctEntity;
 import com.jeff.fjb.dal.entity.ExamineRoomEntity;
+import com.jeff.fjb.dal.entity.ExamineSubjectEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
 import com.jeff.fjb.dal.service.BankService;
 import com.jeff.fjb.dal.service.ExamineRoomService;
+import com.jeff.fjb.dal.service.ExamineSubjectService;
 import com.jeff.fjb.dal.service.UserService;
 
 @Controller
@@ -25,6 +31,12 @@ public class AdminController {
 	private UserService userService = new UserService();
 	private BankService bankService = new BankService();
 	private ExamineRoomService examineRoomService = new ExamineRoomService();
+	private ExamineSubjectService examineSubjectService = new ExamineSubjectService();
+	private static SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+	
+	public AdminController(){
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+	}
 	
 	public String preCheck(HttpSession session) {
 		if (session.getAttribute("id") != null && session.getAttribute("password") != null
@@ -59,6 +71,97 @@ public class AdminController {
 			mv.addObject("message", "欢迎登录:" + userEntity.getUsername());
 			mv.addObject("user", userEntity);
 			mv.setViewName("admin/dashboard");
+		} else {
+			mv.addObject("message", preCheckResult);
+			mv.setView(new RedirectView("/index", true));
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/admin/addExaminationSubject")
+	public ModelAndView addExaminationSubject(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			String message = request.getParameter("message");
+			if (message!=null && message.length() !=0)
+				mv.addObject("message", message);
+			mv.setViewName("admin/addExaminationSubject");
+		} else {
+			mv.addObject("message", preCheckResult);
+			mv.setView(new RedirectView("/index", true));
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/admin/addExamineSubjectCheck")
+	public ModelAndView addExamineSubjectCheck(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			String message = request.getParameter("message");
+			if (message!=null && message.length() !=0)
+				mv.addObject("message", message);
+			String subject = request.getParameter("subject");
+			String charge = request.getParameter("charge");
+			String regTime = request.getParameter("regTime");
+			String resultTime = request.getParameter("resultTime");
+			String note = request.getParameter("note");
+			
+			if (subject == null || subject.length() == 0) {
+				mv.addObject("message", "请输入科目");
+				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				return mv;
+			}
+			if (charge == null || charge.length() == 0) {
+				mv.addObject("message", "请输入费用");
+				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				return mv;
+			}
+			if (regTime == null || regTime.length() == 0) {
+				mv.addObject("message", "报考截止日期");
+				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				return mv;
+			}
+			if (resultTime == null || resultTime.length() == 0) {
+				mv.addObject("message", "请输入考试结果公布日期");
+				mv.setViewName("admin/addExaminationSubject");
+				return mv;
+			}
+			long chargeNum;
+			try {
+				chargeNum = Long.valueOf(charge);
+			} catch (Exception e) {
+				mv.addObject("message", "请输入整数费用");
+				mv.setViewName("admin/addExaminationSubject");
+				return mv;
+			}
+			
+			long regTimeStamp;
+			try {
+				Date date = sdf.parse(regTime + " 23:59:59" );
+				regTimeStamp = date.getTime() / 1000;
+			} catch (ParseException e) {
+				mv.addObject("message", "报名截止日期格式错误");
+				mv.setViewName("admin/addExaminationSubject");
+				return mv;
+			}
+			
+			long resultTimeStamp;
+			try {
+				Date date = sdf.parse(resultTime + " 23:59:59" );
+				resultTimeStamp = date.getTime() / 1000;
+			} catch (ParseException e) {
+				mv.addObject("message", "考试结果公布日期格式错误");
+				mv.setViewName("admin/addExaminationSubject");
+				return mv;
+			}
+			
+			examineSubjectService.addSubject(new ExamineSubjectEntity(subject, note, chargeNum, regTimeStamp, resultTimeStamp));
+			mv.addObject("message", "添加科目："+subject+"成功");
+			mv.setViewName("admin/addExaminationSubject");			
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));

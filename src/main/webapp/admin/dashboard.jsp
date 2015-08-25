@@ -9,6 +9,7 @@
 <body>
 ${message }<br/>
 <a href="addBank">增加考试单位</a><br/>
-<a href="addExaminationRoom">增加考场</a>
+<a href="addExaminationRoom">增加考场</a><br/>
+<a href="addExaminationSubject">增加科目</a><br/>
 </body>
 </html>

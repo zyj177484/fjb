@@ -46,6 +46,23 @@ CREATE TABLE `examine_room` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `examine_subject`
+--
+
+DROP TABLE IF EXISTS `examine_subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_subject` (
+  `subject` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `charge` int(11) NOT NULL,
+  `reg_time` int(11) NOT NULL,
+  `result_time` int(11) NOT NULL,
+  `note` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`subject`,`reg_time`,`result_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `fenhang`
 --
 
@@ -164,4 +181,4 @@ CREATE TABLE `zonghang` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-23 22:32:09
+-- Dump completed on 2015-08-26  0:34:42

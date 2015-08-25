@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeff.fjb.dal.mappers.ExamineSubjectMapper">
+	<resultMap id="Subject" type="ExamineSubject">
+    	<result property="subject" column="subject"/>  
+    	<result property="charge" column="charge" /> 
+    	<result property="note" column="note" />
+    	<result property="regTime" column="reg_time" />
+    	<result property="resultTime" column="result_time" /> 
+	</resultMap>
+	
+	<select id="getSubjects" resultMap="Subject">
+		SELECT * FROM examine_subject 
+	</select>
+	
+	<insert id="addSubject" parameterType="ExamineSubject">
+		INSERT INTO examine_subject (subject, charge, note, reg_time, result_time)
+		VALUES (#{subject}, #{charge}, #{note}, #{regTime}, #{resultTime})
+	</insert>
+	
+</mapper>

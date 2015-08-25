@@ -109,3 +109,7 @@ admin用户登录后 跳转至admin/dashboard.jsp
 点击增加银行 跳转至admin/addBank.jsp
 
 addBank详细修改内容，请至页面看。
+
+2015.08.26####################
+admin用户
+添加考区，考场，考试科目

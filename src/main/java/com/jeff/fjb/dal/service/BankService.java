@@ -1,6 +1,5 @@
 package com.jeff.fjb.dal.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
