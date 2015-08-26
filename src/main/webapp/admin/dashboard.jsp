@@ -8,8 +8,8 @@
 </head>
 <body>
 ${message }<br/>
-<a href="addBank">增加考试单位</a><br/>
-<a href="addExaminationRoom">增加考场</a><br/>
-<a href="addExaminationSubject">增加科目</a><br/>
+<a href="addBank">管理考试单位</a><br/>
+<a href="addExaminationRoom">管理考场</a><br/>
+<a href="addExaminationSubject">管理科目</a><br/>
 </body>
 </html>
