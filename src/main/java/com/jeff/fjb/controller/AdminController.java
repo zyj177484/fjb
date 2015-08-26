@@ -23,6 +23,7 @@ import com.jeff.fjb.dal.entity.ExamineSubjectEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
 import com.jeff.fjb.dal.service.BankService;
 import com.jeff.fjb.dal.service.ExamineRoomService;
+import com.jeff.fjb.dal.service.ExamineService;
 import com.jeff.fjb.dal.service.ExamineSubjectService;
 import com.jeff.fjb.dal.service.UserService;
 
@@ -32,6 +33,7 @@ public class AdminController {
 	private BankService bankService = new BankService();
 	private ExamineRoomService examineRoomService = new ExamineRoomService();
 	private ExamineSubjectService examineSubjectService = new ExamineSubjectService();
+	private ExamineService examineService = new ExamineService();
 	private static SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 	
 	public AdminController(){
@@ -71,6 +73,25 @@ public class AdminController {
 			mv.addObject("message", "欢迎登录:" + userEntity.getUsername());
 			mv.addObject("user", userEntity);
 			mv.setViewName("admin/dashboard");
+		} else {
+			mv.addObject("message", preCheckResult);
+			mv.setView(new RedirectView("/index", true));
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/admin/manageExamine")
+	public ModelAndView manageExamine(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			String message = request.getParameter("message");
+			if (message!=null && message.length() !=0)
+				mv.addObject("message", message);
+			mv.addObject("subjectList", examineSubjectService.getSubjects());
+			mv.addObject("distinctList", examineRoomService.getAllExamineDistinct());
+			mv.setViewName("admin/manageExamine");
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -176,10 +197,10 @@ public class AdminController {
 		String preCheckResult = preCheck(session);
 		if (preCheckResult == null) {
 			List<ExamineDistinctEntity> entities = examineRoomService.getAllExamineDistinct();
+			mv.addObject("distinctList", entities);
 			String message = request.getParameter("message");
 			if (message!=null && message.length() !=0)
 				mv.addObject("message", message);
-			mv.addObject("distinctList", entities);
 			mv.setViewName("admin/manageExamineRoom");
 		} else {
 			mv.addObject("message", preCheckResult);

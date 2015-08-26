@@ -1,8 +1,15 @@
 package com.jeff.fjb.dal.entity;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 public class ExamineSubjectEntity {
 	private String subject, note;
 	private long charge, regTime, resultTime;
+	private String resultTimeString;
+	
+	public ExamineSubjectEntity(){}
 	
 	public ExamineSubjectEntity(String subject, String note, long charge, long regTime, long resultTime) {
 		this.subject = subject;
@@ -10,6 +17,15 @@ public class ExamineSubjectEntity {
 		this.charge = charge;
 		this.regTime = regTime;
 		this.resultTime = resultTime;
+	}
+	public String getResultTimeString() {
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		Date date = new Date(resultTime);
+		return sdf.format(date);
+	}
+	public void setResultTimeString(String resultTimeString) {
+		this.resultTimeString = resultTimeString;
 	}
 	public String getSubject() {
 		return subject;

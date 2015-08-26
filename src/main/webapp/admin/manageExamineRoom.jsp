@@ -26,7 +26,6 @@
    <c:forEach items="${distinctList}" var="distinctEntity">  
         <option value="<c:out value="${distinctEntity.name}"></c:out>" ><c:out value="${distinctEntity.name}"></c:out></option>
    </c:forEach>
-
 </select><br/>
 *人数:<input name="num" type="text" /><br/>
 *教室:<input name="name" type="text" /><br/>
