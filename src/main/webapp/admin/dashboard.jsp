@@ -8,8 +8,9 @@
 </head>
 <body>
 ${message }<br/>
-<a href="addBank">管理考试单位</a><br/>
-<a href="addExaminationRoom">管理考场</a><br/>
-<a href="addExaminationSubject">管理科目</a><br/>
+<a href="manageBank">管理考试单位</a><br/>
+<a href="manageExamineRoom">管理考场</a><br/>
+<a href="manageExamineSubject">管理科目</a><br/>
+<a href="manageExamine">管理科目</a><br/>
 </body>
 </html>

@@ -78,7 +78,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/admin/addExaminationSubject")
+	@RequestMapping(value = "/admin/manageExamineSubject")
 	public ModelAndView addExaminationSubject(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
@@ -87,7 +87,7 @@ public class AdminController {
 			String message = request.getParameter("message");
 			if (message!=null && message.length() !=0)
 				mv.addObject("message", message);
-			mv.setViewName("admin/addExaminationSubject");
+			mv.setViewName("admin/manageExamineSubject");
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -112,22 +112,22 @@ public class AdminController {
 			
 			if (subject == null || subject.length() == 0) {
 				mv.addObject("message", "请输入科目");
-				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				mv.setView(new RedirectView("/admin/manageExamineSubject", true));
 				return mv;
 			}
 			if (charge == null || charge.length() == 0) {
 				mv.addObject("message", "请输入费用");
-				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				mv.setView(new RedirectView("/admin/manageExamineSubject", true));
 				return mv;
 			}
 			if (regTime == null || regTime.length() == 0) {
 				mv.addObject("message", "报考截止日期");
-				mv.setView(new RedirectView("/admin/addExaminationSubject", true));
+				mv.setView(new RedirectView("/admin/manageExamineSubject", true));
 				return mv;
 			}
 			if (resultTime == null || resultTime.length() == 0) {
 				mv.addObject("message", "请输入考试结果公布日期");
-				mv.setViewName("admin/addExaminationSubject");
+				mv.setViewName("admin/manageExamineSubject");
 				return mv;
 			}
 			long chargeNum;
@@ -135,7 +135,7 @@ public class AdminController {
 				chargeNum = Long.valueOf(charge);
 			} catch (Exception e) {
 				mv.addObject("message", "请输入整数费用");
-				mv.setViewName("admin/addExaminationSubject");
+				mv.setViewName("admin/manageExamineSubject");
 				return mv;
 			}
 			
@@ -145,7 +145,7 @@ public class AdminController {
 				regTimeStamp = date.getTime() / 1000;
 			} catch (ParseException e) {
 				mv.addObject("message", "报名截止日期格式错误");
-				mv.setViewName("admin/addExaminationSubject");
+				mv.setViewName("admin/manageExamineSubject");
 				return mv;
 			}
 			
@@ -155,13 +155,13 @@ public class AdminController {
 				resultTimeStamp = date.getTime() / 1000;
 			} catch (ParseException e) {
 				mv.addObject("message", "考试结果公布日期格式错误");
-				mv.setViewName("admin/addExaminationSubject");
+				mv.setViewName("admin/manageExamineSubject");
 				return mv;
 			}
 			
 			examineSubjectService.addSubject(new ExamineSubjectEntity(subject, note, chargeNum, regTimeStamp, resultTimeStamp));
 			mv.addObject("message", "添加科目："+subject+"成功");
-			mv.setViewName("admin/addExaminationSubject");			
+			mv.setViewName("admin/manageExamineSubject");			
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -169,7 +169,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/admin/addExaminationRoom")
+	@RequestMapping(value = "/admin/manageExamineRoom")
 	public ModelAndView addExaminationRoom(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
@@ -180,7 +180,7 @@ public class AdminController {
 			if (message!=null && message.length() !=0)
 				mv.addObject("message", message);
 			mv.addObject("distinctList", entities);
-			mv.setViewName("admin/addExaminationRoom");
+			mv.setViewName("admin/manageExamineRoom");
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -188,7 +188,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/admin/addBank")
+	@RequestMapping(value = "/admin/manageBank")
 	public ModelAndView addBank(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
@@ -197,7 +197,7 @@ public class AdminController {
 			String message = request.getParameter("message");
 			if (message!=null && message.length() !=0)
 				mv.addObject("message", message);
-			mv.setViewName("admin/addBank");
+			mv.setViewName("admin/manageBank");
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -245,8 +245,8 @@ public class AdminController {
 				} else 
 					mv.addObject("message", "请输入考区，考场，且人数大于0");
 			} else 
-				mv.addObject("message", "addExaminationRoom中不存在 "+roomType+" 命令");
-			mv.setView(new RedirectView("/admin/addExaminationRoom", true));
+				mv.addObject("message", "addExaminationRoomCheck中不存在 "+roomType+" 命令");
+			mv.setView(new RedirectView("/admin/manageExamineRoom", true));
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
@@ -296,10 +296,10 @@ public class AdminController {
 						mv.addObject("message", "插入总行失败，该总行编码"+id+"已经存在");
 					}
 				} else 
-					mv.addObject("message", "addBank中不存在 "+bankType+" 命令");
+					mv.addObject("message", "manageBank中不存在 "+bankType+" 命令");
 			} else 
 				mv.addObject("message", "银行编码或者银行名称未填");
-			mv.setView(new RedirectView("/admin/addBank", true));
+			mv.setView(new RedirectView("/admin/manageBank", true));
 		} else {
 			mv.addObject("message", preCheckResult);
 			mv.setView(new RedirectView("/index", true));
