@@ -6,7 +6,8 @@
 		<title>反假货币培训系统</title>
 		<link rel="stylesheet" href="./css/style.css" type="text/css">
 		<link rel="stylesheet" href="./css/ShowDialog.css" type="text/css">
-		<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
+		<%--<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>--%>
+		<script type="text/javascript" src="./js/jquery-1.4.min.js"></script>
 
 		<script>
 			$(document).ready(function(){
@@ -44,7 +45,7 @@
 
 					var id=$("#question_no").text();
 					id++;
-					id = id % 4;
+					<%--id = id % 4;--%>
 					if(check_answer())
 						update_question(id);
 				});
@@ -52,9 +53,8 @@
 
 					var id=$("#question_no").text();
 					id--;
-					if(id<0)
-						id=3;
-					id = id % 4;
+					if(id<=0)
+						id=1;
 					if(check_answer())
 						update_question(id);
 				});
@@ -63,13 +63,13 @@
 				function update_question(id){
 					//$.getJSON(id+".txt", function(json){
 					$.getJSON("getQuestion?no="+id, function(json){
-						<!--alert("json");-->
-						var type,question,no,answer,photo_url;
+						var type,question,no,answer,photo_url,view;
 						type = json["type"];
 						question = json["question"];
 						no = json["no"];
 						answer = json["answer"];
 						photo_url = json["photo_url"];
+						view = json["view"];
 
 						var myHtml="";
 						myHtml='<div class="title"><span id="t">'+ question + '</span></div><div class="item">';
@@ -84,7 +84,8 @@
 								if(type == 0)//something error. goback to index.jsp
 								{
 								alert("用户从其他地方登陆或者登陆超时!");
-								location.href = "index.jsp";
+								<%--location.href = "index.jsp";--%>
+								location.href = view;
 
 								}
 
@@ -197,7 +198,6 @@
 </div>			<div class="userinfo">
 	<div class="left">
 		答对：<span id="TrueNum">1</span> 题&nbsp;&nbsp; 答错：<span id="FalseNum">0</span> 题&nbsp;&nbsp;
-		正确率：<span id="TruePre">100.00%</span>
 	</div>
 	<div class="right">
 	</div>

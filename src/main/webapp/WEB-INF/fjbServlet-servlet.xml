@@ -17,6 +17,7 @@
     
     <mvc:resources location="/images/" mapping="/images/**"/>
     <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
     
         
 	<!--Spring3.1开始的注解 HandlerMapping -->  
