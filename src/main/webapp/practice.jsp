@@ -23,7 +23,12 @@
 					},"fast");
 					$("#bigPic").css("position","fixed");
 				}); 
-
+				//禁止右键
+				    $('body').bind('contextmenu', function() {
+					          return false;
+						      });
+				//禁止复制
+				      $('body').bind("selectstart",function(){return false;});
 
 				function check_answer()
 				{
@@ -63,16 +68,20 @@
 				function update_question(id){
 					//$.getJSON(id+".txt", function(json){
 					$.getJSON("getQuestion?no="+id, function(json){
-						var type,question,no,answer,photo_url,view;
+						var type,question,no,answer,photo_url,view,id;
 						type = json["type"];
 						question = json["question"];
 						no = json["no"];
+						id = json["id"];
 						answer = json["answer"];
 						photo_url = json["photo_url"];
 						view = json["view"];
 
+						if(no==0)
+							no=id; //按个getQuestion?id= 方式获取题目时，no为0，此时根据id来显示题号
+
 						var myHtml="";
-						myHtml='<div class="title"><span id="t">'+ question + '</span></div><div class="item">';
+						myHtml='<div class="title"><span id="t">'+ '第'+ no+'题. '+question + '</span></div><div class="item">';
 
 						if(photo_url)
 						{
