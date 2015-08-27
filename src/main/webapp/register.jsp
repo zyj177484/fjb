@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/main.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
+<%--<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>--%>
+<script type="text/javascript" src="./js/jquery-1.4.min.js"></script>
 <title>上海地区反假币上岗证书考试系统--注册</title>
 
 <script>
@@ -2610,29 +2611,63 @@ subval3[1177] = new Array('0009555801','000955580149','长寿支行')
 subval3[1178] = new Array('0009555801','000955580150','周浦支行');
 
 
+	$.getJSON("getBank?type=zonghang",function(json){
+//	[{"id":"123a","name":"上海银行"},{"id":"B0003H111000001","name":"中国银行股份有限公司"}]
+		var zonghang_html ="<option>==请选择所属总行==</option>";
+		var id,name;
+		for(var i=0,l=json.length;i<l;i++){  
+		id = json[i]["id"];
+		name = json[i]["name"];
+		//<option value="00095888" >人民银行</option>
+		zonghang_html += "<option value=" + id +">" + name +"</option>"; 
+		     }  
+		     $("#select_zonghang").html(zonghang_html);
+
+	});
+
 	$("#select_zonghang").change(function(){
 		
 		var zonghang_id = $("#select_zonghang").val()
-		var myHtml="<option>==请选择所属分行==</option>";
-	    for (i=0; i<subval2.length; i++)
-	    {
-		if (subval2[i][0] == zonghang_id)
-			myHtml += "<option value="+subval2[i][1]+">" + subval2[i][2] + "</option>";
-	    }
-	    $("#select_fenhang").html(myHtml);
+	    <%--for (i=0; i<subval2.length; i++)--%>
+	    <%--{--%>
+		<%--if (subval2[i][0] == zonghang_id)--%>
+			<%--myHtml += "<option value="+subval2[i][1]+">" + subval2[i][2] + "</option>";--%>
+	    <%--}--%>
+	    <%--$("#select_fenhang").html(myHtml);--%>
+		$.getJSON("getBank?type=fenhang&zonghangid="+zonghang_id,function(json){
+			var myHtml="<option>==请选择所属分行==</option>";
+			var id,name;
+			for(var i=0,l=json.length;i<l;i++){  
+			id = json[i]["id"];
+			name = json[i]["name"];
+			myHtml += "<option value=" + id +">" + name +"</option>"; 
+		     }  
+		     $("#select_fenhang").html(myHtml);
+		     });
+	    
 
 	});
 
 	$("#select_fenhang").change(function(){
 		
 		var fenhang_id = $("#select_fenhang").val()
-		var myHtml="<option>==请选择所属支行==</option>";
-	    for (i=0; i<subval3.length; i++)
-	    {
-		if (subval3[i][0] == fenhang_id)
-			myHtml += "<option value="+subval3[i][1]+">" + subval3[i][2] + "</option>";
-	    }
-	    $("#select_zhihang").html(myHtml);
+		<%--var myHtml="<option>==请选择所属支行==</option>";--%>
+	    <%--for (i=0; i<subval3.length; i++)--%>
+	    <%--{--%>
+		<%--if (subval3[i][0] == fenhang_id)--%>
+			<%--myHtml += "<option value="+subval3[i][1]+">" + subval3[i][2] + "</option>";--%>
+	    <%--}--%>
+	    <%--$("#select_zhihang").html(myHtml);--%>
+		$.getJSON("getBank?type=zhihang&fenhangid="+fenhang_id,function(json){
+			var myHtml="<option>==请选择所属支行==</option>";
+			var id,name;
+			for(var i=0,l=json.length;i<l;i++){  
+			id = json[i]["id"];
+			name = json[i]["name"];
+			myHtml += "<option value=" + id +">" + name +"</option>"; 
+		     }  
+		     $("#select_zhihang").html(myHtml);
+		     });
 
 	});
 
@@ -2664,14 +2699,12 @@ subval3[1178] = new Array('0009555801','000955580150','周浦支行');
                 alert('身份证号错误');
             else if ($('#id').val()!=$('#confirmId').val())
                 alert('身份证两次填写不一致');
-            else if (!checkEmail($('#mail').val()))
-                alert('请填写正确的邮箱');
+            <%--else if (!checkEmail($('#mail').val()))--%>
+                <%--alert('请填写正确的邮箱');--%>
 	    else if (!$('#password').val())
 		alert('请填写密码');
             else if ($('#password').val()!=$('#confirmPassword').val())
                 alert('两次密码填写不一致');
-//            else if (!$('#mail').val())
- //               alert('请填写邮箱');
 //            else if (!imageOk)    //move to uploadPhoto.jsp
  //               alert('请上传照片');
             else
@@ -2777,117 +2810,6 @@ ${message }
 <select name="zonghang" id="select_zonghang">
 <option>==请选择所属总行==</option>
 <option value="00095888" >人民银行</option>
-<option value="00095666" >农业发展银行</option>
-<option value="00095588" >工商银行</option>
-<option value="00095599" >农业银行</option>
-<option value="00095566" >中国银行</option>
-<option value="00095533" >建设银行</option>
-<option value="00095559" >交通银行</option>
-<option value="00095528" >浦东发展银行</option>
-<option value="00011185" >邮政储蓄银行</option>
-<option value="00962888" >上海银行</option>
-<option value="00095555" >招商银行</option>
-<option value="00095595" >光大银行</option>
-<option value="00095577" >华夏银行</option>
-<option value="00095568" >民生银行</option>
-<option value="00095561" >兴业银行</option>
-<option value="00095558" >中信银行</option>
-<option value="00095508" >广东发展银行</option>
-<option value="00095501" >平安银行</option>
-<option value="00962999" >农村商业银行</option>
-<option value="00095680" >北京银行</option>
-<option value="00095682" >浙商银行</option>
-<option value="00095683" >南京银行</option>
-<option value="00095684" >杭州银行</option>
-<option value="00095685" >江苏银行</option>
-<option value="00095696" >浙江稠州商业银行</option>
-<option value="00095703" >宁波通商银行</option>
-<option value="00095687" >天津银行</option>
-<option value="00095688" >泰隆银行</option>
-<option value="00095689" >温州银行</option>
-<option value="00095690" >大连银行</option>
-<option value="00095691" >民泰银行</option>
-<option value="00095681" >宁波银行</option>
-<option value="00095692" >盛京银行</option>
-<option value="00096652" >厦门国际银行</option>
-<option value="00095708" >华瑞银行</option>
-<option value="00095702" >中国信托商业银行</option>
-<option value="00095693" >崇明长江村镇银行</option>
-<option value="00095694" >闵行上银村镇银行</option>
-<option value="00095695" >奉贤浦发村镇银行</option>
-<option value="00095698" >上海松江民生村镇银行</option>
-<option value="00095699" >上海嘉定民生村镇银行</option>
-<option value="00095700" >上海浦东江南村镇银行</option>
-<option value="00095701" >上海宝山富民村镇银行</option>
-<option value="00095704" >浦东建信村镇银行</option>
-<option value="00095705" >上海农商村镇银行</option>
-<option value="00095706" >崇明沪农商村镇银行</option>
-<option value="00096664" >上海商业银行</option>
-<option value="00095707" >上海青浦刺桐红村镇银行</option>
-<option value="00096601" >巴黎银行</option>
-<option value="00096602" >德富泰银行</option>
-<option value="00096603" >华一银行</option>
-<option value="00096604" >汇丰银行</option>
-<option value="00096605" >渣打银行</option>
-<option value="00096606" >意大利罗马银行</option>
-<option value="00096607" >新加坡大华银行</option>
-<option value="00096608" >新加坡华侨银行</option>
-<option value="00096609" >新加坡星展银行</option>
-<option value="00096610" >恒生银行</option>
-<option value="00096611" >东亚银行</option>
-<option value="00096612" >东京三菱日联银行</option>
-<option value="00096613" >日本瑞穗银行</option>
-<option value="00096615" >花旗银行</option>
-<option value="00096616" >荷兰银行</option>
-<option value="00096618" >大新银行</option>
-<option value="00096619" >德国商业银行</option>
-<option value="00096620" >德意志银行</option>
-<option value="00096621" >法国东方汇理银行</option>
-<option value="00096622" >法国外贸银行</option>
-<option value="00096623" >韩亚银行</option>
-<option value="00096624" >华侨银行</option>
-<option value="00096625" >联合银行（美国）</option>
-<option value="00096626" >新韩银行</option>
-<option value="00096627" >意大利联合圣保罗银行</option>
-<option value="00096628" >比利时富通银行</option>
-<option value="00096629" >韩国外换银行</option>
-<option value="00096630" >美国银行</option>
-<option value="00096631" >南洋商业银行</option>
-<option value="00096632" >盘古银行</option>
-<option value="00096633" >永亨银行</option>
-<option value="00096634" >友利银行</option>
-<option value="00096635" >菲律宾首都银行</option>
-<option value="00096636" >北欧银行瑞典有限公司</option>
-<option value="00096637" >比利时联合银行</option>
-<option value="00096638" >中国银行（香港）</option>
-<option value="00096639" >印度卡纳拉银行</option>
-<option value="00096640" >印度国家银行</option>
-<option value="00096641" >韩国产业银行</option>
-<option value="00096642" >法国兴业银行</option>
-<option value="00096643" >日本住友信托银行</option>
-<option value="00096644" >中信嘉华银行</option>
-<option value="00096645" >意大利西雅那银行</option>
-<option value="00096646" >德国德累斯登</option>
-<option value="00096647" >德国西德银行</option>
-<option value="00096648" >澳大利亚和新西兰银行</option>
-<option value="00096649" >摩根大通银行</option>
-<option value="00096650" >澳大利亚西太平洋银行</option>
-<option value="00095686" >渤海银行</option>
-<option value="00096651" >马来亚银行</option>
-<option value="00096653" >永隆银行</option>
-<option value="00096654" >苏格兰皇家银行</option>
-<option value="00096614" >三井住友银行（中国）有限公司</option>
-<option value="00096655" >台湾第一商业银行</option>
-<option value="00095697" >银华金融服务公司</option>
-<option value="00096660" >韩国大邱银行</option>
-<option value="00096661" >台湾土地银行</option>
-<option value="00096662" >印度同心银行有限公司</option>
-<option value="00096663" >印度卡纳拉银行</option>
-<option value="00096656" >宁波国际银行</option>
-<option value="00096657" >日本横滨银行</option>
-<option value="00096658" >俄罗斯外贸银行</option>
-<option value="00096659" >国泰世华银行</option>
-<option value="00095600" >无</option>
 </select>
 
 <select name="fenhang" id="select_fenhang">
