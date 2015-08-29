@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.jeff.fjb.dal.entity.BankEntity;
 import com.jeff.fjb.dal.entity.ExamineDistinctEntity;
+import com.jeff.fjb.dal.entity.ExamineEntity;
 import com.jeff.fjb.dal.entity.ExamineRoomEntity;
 import com.jeff.fjb.dal.entity.ExamineSubjectEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
@@ -97,6 +98,101 @@ public class AdminController {
 			mv.setView(new RedirectView("/index", true));
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value = "/admin/addExamineCheck")
+	public ModelAndView addExamineCheck(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult != null) {
+			mv.addObject("message", preCheckResult);
+			mv.setView(new RedirectView("/index", true));
+			return mv;
+		}
+		String[] rooms = request.getParameterValues("room");
+		String subject = request.getParameter("subject");
+		String distinct = request.getParameter("distinct");
+		String date = request.getParameter("date").trim();
+		String startTime = request.getParameter("startTime").trim();
+		String endTime = request.getParameter("endTime").trim();
+		if (rooms.length != 0 && subject != null && distinct != null && date != null 
+				&& startTime != null && endTime != null) {
+			ExamineSubjectEntity examineSubjectEntity = examineSubjectService.getSubject(subject);
+			if (examineSubjectEntity == null) {
+		    	mv.addObject("message", "科目:" + subject + " 不存在");
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+		    }
+			
+			long startTimeStamp = 0;
+			long endTimeStamp = 0;
+			try {
+				startTimeStamp = sdf.parse(date + " " + startTime).getTime()/1000;
+				endTimeStamp = sdf.parse(date + " " + endTime).getTime()/1000;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				mv.addObject("message", "日期或者时间格式不对");
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+			}
+			
+			if (startTimeStamp >= endTimeStamp ) {
+				mv.addObject("message", "考试开始时间: " + startTime + " 大于考试结束时间: " + endTime);
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+			}
+			
+			if (startTimeStamp >= examineSubjectEntity.getResultTime() 
+					|| endTimeStamp >= examineSubjectEntity.getResultTime()) {
+				mv.addObject("message", "考试时间在考试公布结果之后");
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+			}
+			
+			ExamineDistinctEntity examineDistinctEntity = examineRoomService.getExamineDistinct(distinct);
+			if (examineDistinctEntity == null) {
+		    	mv.addObject("message", "考区:" + distinct + " 不存在");
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+		    }
+
+			StringBuffer message = new StringBuffer();
+			for (String room : rooms) {
+				ExamineRoomEntity examineRoomEntity = examineRoomService.getExamineRoom(distinct, room);
+				if (examineRoomEntity == null) {
+					mv.addObject("message", "考场:" + room + " 不存在");
+					mv.setView(new RedirectView("/admin/manageExamine", true));
+					return mv;
+				}
+				System.out.println("1." + subject + " " + distinct + " " + room + " " + startTimeStamp + " " + endTimeStamp);
+				ExamineEntity examineEntity = new ExamineEntity(subject, distinct, 
+						room, startTimeStamp, endTimeStamp, 0, examineRoomEntity.getNum());
+				List<ExamineEntity> examineEntities = examineService.getExamine(examineEntity);
+				for (ExamineEntity entity : examineEntities ){
+					System.out.println("2." + entity.getSubject() + ":" +entity.getExamineDistinct() + ":" + entity.getRoom() + ":" +entity.getStartTime()+":"+entity.getEndTime());
+				}
+				if (examineEntities == null || examineEntities.size() == 0) {
+					try {
+						examineService.addExamine(examineEntity);
+						System.out.println("3." + examineEntity.getSubject() + ":" +examineEntity.getExamineDistinct() + ":" + examineEntity.getRoom() + ":" +examineEntity.getStartTime()+":"+examineEntity.getEndTime());
+						message.append("成功，考场:" + room + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
+					} catch (Exception e) {
+						System.out.println("4");
+						message.append("失败，考场:" + room + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
+					}
+				} else {
+					message.append("失败，考场:" + room + " 时间:" + date + " " + startTime + " ~ " + endTime + "<br/>");
+				}
+			}
+			mv.addObject("message", message.toString());
+			mv.setView(new RedirectView("/admin/manageExamine", true));
+			return mv;
+		} else {
+			mv.addObject("message", "参数未填写完全");
+			mv.setView(new RedirectView("/admin/manageExamine", true));
+			return mv;
+		}
 	}
 	
 	@RequestMapping(value = "/admin/manageExamineSubject")

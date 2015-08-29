@@ -141,31 +141,43 @@ public class PracticeController {
 			if (request.getParameter("no") != null) {
 				try {
 					int no = Integer.valueOf(request.getParameter("no"));
-					if (session.getAttribute("questionArray") != null) {
-						JsonArray questionArray = new JsonParser()
-								.parse(session.getAttribute("questionArray").toString()).getAsJsonArray();
-						int id = questionArray.get(no - 1).getAsInt();
-						PracticeEntity practiceEntity = practiceService.getPracticeEntity(id);
-						if (practiceEntity != null) {
-							if (!practiceEntity.getHasPhoto().equals("false"))
-								practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id);
-							else 
-								practiceEntity.setPhoto_url(null);
-							practiceEntity.setNo(no);
-							out.write(new Gson().toJson(practiceEntity));
+					if (no > 0 && no <= MagicNum.QUESTION_NUM) {
+						if (session.getAttribute("questionArray") != null) {
+							JsonArray questionArray = new JsonParser()
+									.parse(session.getAttribute("questionArray").toString()).getAsJsonArray();
+							int id = questionArray.get(no - 1).getAsInt();
+							PracticeEntity practiceEntity = practiceService.getPracticeEntity(id);
+							if (practiceEntity != null) {
+								if (!practiceEntity.getHasPhoto().equals("false"))
+									practiceEntity.setPhoto_url("getQuestionPhoto?id=" + id);
+								else 
+									practiceEntity.setPhoto_url(null);
+								practiceEntity.setNo(no);
+								out.write(new Gson().toJson(practiceEntity));
+								return;
+							} else {
+								JsonObject object = new JsonObject();
+								object.addProperty("type", "0");
+								object.addProperty("message", "该题不存在");
+								object.addProperty("view", "login");
+								out.write(object.toString());
+								return;
+							}
 						} else {
 							JsonObject object = new JsonObject();
 							object.addProperty("type", "0");
-							object.addProperty("message", "该题不存在");
-							object.addProperty("view", "user/dashboard");
+							object.addProperty("message", "请点击开始练习");
+							object.addProperty("view", "login");
 							out.write(object.toString());
+							return;
 						}
 					} else {
 						JsonObject object = new JsonObject();
 						object.addProperty("type", "0");
-						object.addProperty("message", "请点击开始练习");
+						object.addProperty("message", "该题号不存在");
 						object.addProperty("view", "login");
 						out.write(object.toString());
+						return;
 					}
 				} catch (Exception e) {
 					JsonObject object = new JsonObject();
@@ -173,10 +185,12 @@ public class PracticeController {
 					object.addProperty("message", "输入题号不存在");
 					object.addProperty("view", "login");
 					out.write(object.toString());
+					return;
 				}
 			} else if (request.getParameter("id") != null) {
 				try {
 					int id = Integer.valueOf(request.getParameter("id"));
+					System.out.println("id:" + id);
 					PracticeEntity practiceEntity = practiceService.getPracticeEntity(id);
 					if (practiceEntity != null) {
 						if (!practiceEntity.getHasPhoto().equals("false"))
@@ -184,12 +198,14 @@ public class PracticeController {
 						else 
 							practiceEntity.setPhoto_url(null);
 						out.write(new Gson().toJson(practiceEntity));
+						return;
 					} else {
 						JsonObject object = new JsonObject();
 						object.addProperty("type", "0");
 						object.addProperty("message", "该题不存在");
 						object.addProperty("view", "login");
 						out.write(object.toString());
+						return;
 					}
 				} catch (Exception e) {
 					JsonObject object = new JsonObject();
@@ -197,6 +213,7 @@ public class PracticeController {
 					object.addProperty("message", "id不对");
 					object.addProperty("view", "login");
 					out.write(object.toString());
+					return;
 				}
 			} else {
 				JsonObject object = new JsonObject();
@@ -204,6 +221,7 @@ public class PracticeController {
 				object.addProperty("message", "请输入题号");
 				object.addProperty("view", "login");
 				out.write(object.toString());
+				return;
 			}
 		} else {
 			JsonObject object = new JsonObject();
@@ -211,6 +229,7 @@ public class PracticeController {
 			object.addProperty("message", preCheckResult.getModel().get("message").toString());
 			object.addProperty("view", preCheckResult.getViewName());
 			out.write(object.toString());
+			return;
 		}
 	}
 }

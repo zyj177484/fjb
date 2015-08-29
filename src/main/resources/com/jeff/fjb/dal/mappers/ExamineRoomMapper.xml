@@ -15,4 +15,14 @@
 	<select id="getAllExamineDistinct" resultType="ExamineDistinct">
 		SELECT * FROM examine_distinct;
 	</select>
+	
+	<select id="getExamineDistinct" parameterType="String" resultType="ExamineDistinct">
+		SELECT * FROM examine_distinct WHERE name=#{distinct};
+	</select>
+	<select id="getExamineRoom" parameterType="String" resultType="ExamineRoom">
+		SELECT * FROM examine_room WHERE examineDistinct=#{distinct} AND name=#{room};
+	</select>
+	<select id="getExamineRooms" parameterType="String" resultType="ExamineRoom">
+		SELECT * FROM examine_room WHERE examineDistinct=#{distinct};
+	</select>	
 </mapper>

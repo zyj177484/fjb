@@ -14,6 +14,10 @@
 		SELECT * FROM examine_subject 
 	</select>
 	
+	<select id="getSubject" parameterType="String" resultMap="Subject">
+		SELECT * FROM examine_subject WHERE subject=#{subject}
+	</select>
+	
 	<insert id="addSubject" parameterType="ExamineSubject">
 		INSERT INTO examine_subject (subject, charge, note, reg_time, result_time)
 		VALUES (#{subject}, #{charge}, #{note}, #{regTime}, #{resultTime})

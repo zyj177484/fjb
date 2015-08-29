@@ -113,3 +113,12 @@ addBank详细修改内容，请至页面看。
 2015.08.26####################
 admin用户
 添加考区，考场，考试科目
+
+2015.08.29####################
+admin用户
+admin/manageExamine
+添加考试
+获取一个考点对应的所有考场
+http://localhost:8080/fjb/getRooms?distinct=测试考点
+[{"examineDistinct":"测试考点","name":"测试考场","num":20},{"examineDistinct":"测试考点","name":"测试考场2","num":20}]
+num表示该考场最大人数

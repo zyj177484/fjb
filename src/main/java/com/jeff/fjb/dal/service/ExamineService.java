@@ -20,11 +20,32 @@ public class ExamineService {
 		}
 	}
 	
+	public List<ExamineEntity> getExamine(ExamineEntity examineEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
+			return examineMapper.getExamine(examineEntity);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 	public void addExamine(ExamineEntity entity) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
 			examineMapper.addExamine(entity);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public void addExamines(List<ExamineEntity> entities) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
+			examineMapper.addExamines(entities);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

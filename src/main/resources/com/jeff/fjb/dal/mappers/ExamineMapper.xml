@@ -4,7 +4,7 @@
 <mapper namespace="com.jeff.fjb.dal.mappers.ExamineMapper">
 	<resultMap id="ExamineResult" type="Examine">     
     	<result property="subject" column="subject"/>     
-    	<result property="ditinct" column="ditinct"/>  
+    	<result property="examineDistinct" column="examineDistinct"/>  
     	<result property="room" column="room" /> 
     	<result property="startTime" column="start_time" />
     	<result property="endTime" column="end_time" />
@@ -16,9 +16,23 @@
 		SELECT * FROM examine 
 	</select>
 	
+	<select id="getExamine" parameterType="Examine" resultMap="ExamineResult">
+		SELECT * FROM examine 
+		WHERE examineDistinct=#{examineDistinct} AND subject=#{subject} AND room=#{room}
+		AND #{startTime}>=start_time
+		AND end_time>=#{endTime} 
+	</select>	
+	
 	<insert id="addExamine" parameterType="Examine">
-		INSERT INTO examine (subject, ditinct, room, start_time, end_time, sign_up, max_num)
-		VALUES (#{subject}, #{ditinct}, #{room}, #{startTime}, #{endTime}, #{signUp}, #{maxNum})
+		INSERT INTO examine (subject, examineDistinct, room, start_time, end_time, sign_up, max_num)
+		VALUES (#{subject}, #{examineDistinct}, #{room}, #{startTime}, #{endTime}, #{signUp}, #{maxNum})
 	</insert>
 	
+	<insert id="addExamines">
+		INSERT INTO examine (subject, examineDistinct, room, start_time, end_time, sign_up, max_num)
+        VALUES
+        <foreach collection="entities" index="index" item="entity" separator=",">
+            (#{entity.subject},#{entity.examineDistinct},#{entity.room},#{entity.startTime},#{entity.endTime},#{entity.signUp},#{entity.maxNum})
+        </foreach>
+	</insert>
 </mapper>

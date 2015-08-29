@@ -21,7 +21,7 @@ public class ExamineSubjectEntity {
 	public String getResultTimeString() {
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-		Date date = new Date(resultTime);
+		Date date = new Date(resultTime * 1000);
 		return sdf.format(date);
 	}
 	public void setResultTimeString(String resultTimeString) {

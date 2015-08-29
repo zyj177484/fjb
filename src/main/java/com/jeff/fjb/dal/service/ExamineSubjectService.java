@@ -29,4 +29,14 @@ public class ExamineSubjectService {
 			sqlSession.close();
 		}
 	}
+	
+	public ExamineSubjectEntity getSubject(String subject) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineSubjectMapper mapper = sqlSession.getMapper(ExamineSubjectMapper.class);
+			return mapper.getSubject(subject);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
