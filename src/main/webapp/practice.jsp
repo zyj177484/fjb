@@ -92,7 +92,8 @@
 
 								if(type == 0)//something error. goback to index.jsp
 								{
-								alert("用户从其他地方登陆或者登陆超时!");
+								<%--alert("用户从其他地方登陆或者登陆超时!");--%>
+								alert(json["message"]);
 								<%--location.href = "index.jsp";--%>
 								location.href = view;
 
