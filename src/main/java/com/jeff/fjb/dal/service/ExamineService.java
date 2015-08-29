@@ -20,11 +20,21 @@ public class ExamineService {
 		}
 	}
 	
-	public List<ExamineEntity> getExamine(ExamineEntity examineEntity) {
+	public List<ExamineEntity> getToStartExamine(long now) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
-			return examineMapper.getExamine(examineEntity);
+			return examineMapper.getToStartExamine(now);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<ExamineEntity> getUsedExamineRoom(ExamineEntity examineEntity) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
+			return examineMapper.getUsedExamineRoom(examineEntity);
 		} finally {
 			sqlSession.close();
 		}

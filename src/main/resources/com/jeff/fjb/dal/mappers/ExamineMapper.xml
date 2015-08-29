@@ -16,11 +16,15 @@
 		SELECT * FROM examine 
 	</select>
 	
-	<select id="getExamine" parameterType="Examine" resultMap="ExamineResult">
+	<select id="getToStartExamine" parameterType="Long" resultMap="ExamineResult">
 		SELECT * FROM examine 
-		WHERE examineDistinct=#{examineDistinct} AND subject=#{subject} AND room=#{room}
-		AND #{startTime}>=start_time
-		AND end_time>=#{endTime} 
+		WHERE start_time>=#{now}
+	</select>	
+	
+	<select id="getUsedExamineRoom" parameterType="Examine" resultMap="ExamineResult">
+		SELECT * FROM examine 
+		WHERE examineDistinct=#{examineDistinct} AND room=#{room}
+		AND ((#{startTime}>=start_time AND end_time>=#{startTime}) OR (#{endTime}>=start_time AND end_time>=#{endTime}))
 	</select>	
 	
 	<insert id="addExamine" parameterType="Examine">

@@ -1,7 +1,11 @@
 package com.jeff.fjb.dal.entity;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 public class ExamineEntity {
-	private String subject, examineDistinct, room;
+	private String subject, examineDistinct, room, startTimeString, endTimeString;
 	private long startTime, endTime, signUp, maxNum;
 
 	public ExamineEntity(){}
@@ -15,6 +19,28 @@ public class ExamineEntity {
 		this.endTime = endTime;
 		this.signUp = signUp;
 		this.maxNum = maxNum;
+	}
+
+	public String getStartTimeString() {
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		Date date = new Date(startTime * 1000);
+		return sdf.format(date);
+	}
+
+	public void setStartTimeString(String startTimeString) {
+		this.startTimeString = startTimeString;
+	}
+
+	public String getEndTimeString() {
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		Date date = new Date(endTime * 1000);
+		return sdf.format(date);
+	}
+
+	public void setEndTimeString(String endTimeString) {
+		this.endTimeString = endTimeString;
 	}
 
 	public String getSubject() {

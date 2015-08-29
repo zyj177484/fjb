@@ -12,7 +12,23 @@
 <c:if test="${!empty message}" >
 <br/>提示：${message }<br />
 </c:if>
-
+<hr/>
+已有考试:<br/>
+<table>
+<tr><td>科目</td><td>考点</td><td>考场</td><td>开始时间</td><td>结束时间</td><td>报名人数</td><td>考场容纳人数</td></tr>
+   <c:forEach items="${examineList}" var="examineEntity">
+   <tr>  
+        <td><c:out value="${examineEntity.subject}"></c:out></td>
+        <td><c:out value="${examineEntity.examineDistinct}"></c:out></td>
+        <td><c:out value="${examineEntity.room}"></c:out></td>
+        <td><c:out value="${examineEntity.startTimeString}"></c:out></td>
+        <td><c:out value="${examineEntity.endTimeString}"></c:out></td>
+        <td><c:out value="${examineEntity.signUp}"></c:out></td>
+        <td><c:out value="${examineEntity.maxNum}"></c:out></td>
+   </tr>
+   </c:forEach>
+</table>
+<hr/>
 <form action="addExamineCheck" method="post">
 添加考试:<br/>
 *科目名称:<select name="subject">

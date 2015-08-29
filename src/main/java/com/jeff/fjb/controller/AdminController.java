@@ -90,6 +90,7 @@ public class AdminController {
 			String message = request.getParameter("message");
 			if (message!=null && message.length() !=0)
 				mv.addObject("message", message);
+			mv.addObject("examineList", examineService.getToStartExamine(new Date().getTime()/1000));
 			mv.addObject("subjectList", examineSubjectService.getSubjects());
 			mv.addObject("distinctList", examineRoomService.getAllExamineDistinct());
 			mv.setViewName("admin/manageExamine");
@@ -168,7 +169,7 @@ public class AdminController {
 				System.out.println("1." + subject + " " + distinct + " " + room + " " + startTimeStamp + " " + endTimeStamp);
 				ExamineEntity examineEntity = new ExamineEntity(subject, distinct, 
 						room, startTimeStamp, endTimeStamp, 0, examineRoomEntity.getNum());
-				List<ExamineEntity> examineEntities = examineService.getExamine(examineEntity);
+				List<ExamineEntity> examineEntities = examineService.getUsedExamineRoom(examineEntity);
 				for (ExamineEntity entity : examineEntities ){
 					System.out.println("2." + entity.getSubject() + ":" +entity.getExamineDistinct() + ":" + entity.getRoom() + ":" +entity.getStartTime()+":"+entity.getEndTime());
 				}
