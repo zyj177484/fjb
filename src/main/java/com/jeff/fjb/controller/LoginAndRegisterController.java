@@ -2,11 +2,13 @@ package com.jeff.fjb.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.jeff.fjb.dal.service.UserService;
 
 @Controller
 public class LoginAndRegisterController {
+	private static Logger logger = Logger.getLogger(LoginAndRegisterController.class);
 
 	private UserService userService = new UserService();
 	
@@ -49,7 +52,7 @@ public class LoginAndRegisterController {
 			mv.setViewName("user/uploadPhoto");
 		} else {
 			mv.addObject("message", preCheckResult);
-			mv.setViewName("index");
+			mv.setViewName("redirect:/index");
 		}
 		return mv;
 	}
@@ -67,11 +70,11 @@ public class LoginAndRegisterController {
 					BufferedImage image = ImageIO.read(file.getInputStream());
 					if (image == null) {
 						mv.addObject("message", "上传的不是图片");
-						mv.setViewName("user/uploadPhoto");
+						mv.setViewName("redirect:/user/uploadPhoto");
 					} else {
 						if (image.getWidth() != 114 && image.getHeight() != 156) {
 							mv.addObject("message", "照片长宽不正确。当前照片宽：" + image.getWidth() + "长：" + image.getHeight());
-							mv.setViewName("user/uploadPhoto");
+							mv.setViewName("redirect:/user/uploadPhoto");
 						} else {
 							userService.insertUserPhoto(id, file.getBytes());
 							mv.setViewName("redirect:/login");
@@ -79,16 +82,16 @@ public class LoginAndRegisterController {
 					}
 				} catch (IOException e) {
 					mv.addObject("message", "上传的不是图片");
-					mv.setViewName("user/uploadPhoto");
+					mv.setViewName("redirect:/user/uploadPhoto");
 					return mv;
 				}
 			} else {
 				mv.addObject("message", "文件超过300KB");
-				mv.setViewName("user/uploadPhoto");
+				mv.setViewName("redirect:/user/uploadPhoto");
 			}
 		} else {
 			mv.addObject("message", preCheckResult);
-			mv.setViewName("index");
+			mv.setViewName("redirect:/index");
 		}
 		return mv;
 	}
@@ -138,7 +141,7 @@ public class LoginAndRegisterController {
 			mv.setViewName("user/dashboard");
 		} else {
 			mv.addObject("message", preCheckResult);
-			mv.setViewName("index");
+			mv.setViewName("redirect:/index");
 		}
 		return mv;
 	}
@@ -157,10 +160,10 @@ public class LoginAndRegisterController {
 				session.setAttribute("password", userEntity.getPassword());
 				session.setAttribute("practice", userEntity.getPractice());
 				session.setAttribute("role", userEntity.getRole());
+				logger.info(userEntity.getRole() + "用户" + userEntity.getUsername() + "于" + new Date() + "登录");
 				if (userEntity.getRole().equals("admin"))
 					mv.setViewName("redirect:/admin/login");
 				else {
-					System.out.println(userEntity.getRole());
 					UserEntity photoEntity = userService.getPhoto(id);
 					if (photoEntity==null || photoEntity.getPhoto() == null) 
 						mv.setViewName("redirect:/uploadPhoto");
@@ -169,11 +172,11 @@ public class LoginAndRegisterController {
 				}
 			} else {
 				mv.addObject("message", "账号或者密码错误");
-				mv.setViewName("index");
+				mv.setViewName("redirect:/index");
 			}
 		} else {
 			mv.addObject("message", "未输入账号或者密码");
-			mv.setViewName("index");
+			mv.setViewName("redirect:/index");
 		}
 		return mv;
 	}

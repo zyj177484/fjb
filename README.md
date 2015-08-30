@@ -122,3 +122,8 @@ admin/manageExamine
 http://localhost:8080/fjb/getRooms?distinct=测试考点
 [{"examineDistinct":"测试考点","name":"测试考场","num":20},{"examineDistinct":"测试考点","name":"测试考场2","num":20}]
 num表示该考场最大人数
+
+2015.08.30###################
+用户可以为练习付费
+在登录后 点击"付费练习"之后。自动生成订单，并且在（测试情况）5分钟后订单自动失效。
+点击 确认付款将模拟付款成功。

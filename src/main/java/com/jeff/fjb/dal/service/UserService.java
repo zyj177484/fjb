@@ -71,6 +71,18 @@ public class UserService {
 		}
 	}
 	
+	public void updateUserPractice(String id, int practice) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			userMapper.updateUserPractice(id, practice);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+		
+	}
+	
 	public  static void main(String[] args){
 		UserService service = new UserService();
 		if (service.getPhoto("123") != null)

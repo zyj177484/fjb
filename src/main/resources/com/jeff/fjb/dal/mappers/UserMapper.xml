@@ -22,7 +22,7 @@
 		SELECT id, username, password,  role,  sessionId,  sex,  zonghang,  fenhang,  zhihang,  fenlichu,  mobile, mail, practice FROM user WHERE id=#{id}
 	</select>
 	<select id="getCheckInfo" parameterType="String" resultMap="UserResult">
-		SELECT id, password, sessionId, role, practice FROM user WHERE id=#{id}
+		SELECT id, username, password, sessionId, role, practice FROM user WHERE id=#{id}
 	</select>
 	<select id="getPhoto" parameterType="String" resultMap="UserResult">
 		SELECT photo FROM user WHERE id=#{id}
@@ -36,6 +36,10 @@
 	</insert>
 	<update id="insertUserPhoto" >
 		UPDATE user SET photo=#{photo}
+		WHERE id=#{id}
+	</update>
+	<update id="updateUserPractice" parameterType="Integer">
+		UPDATE user SET practice=#{practice}
 		WHERE id=#{id}
 	</update>
 </mapper>

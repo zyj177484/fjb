@@ -11,4 +11,5 @@ public interface UserMapper {
 	public void insertUser(UserEntity userEntity);
 	public void insertUserPhoto(@Param("id") String id, @Param("photo") byte[] photo);
 	public UserEntity getPhoto(@Param("id") String id);
+	public void updateUserPractice(@Param("id") String id, @Param("practice") int practice);
 }

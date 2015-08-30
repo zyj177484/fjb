@@ -26,6 +26,8 @@
 <c:if test="${user.practice == 1}" >
 <br/><a href="practice">开始新的练习题</a>
 </c:if>
-
+<c:if test="${user.practice == 0}" >
+<br/><a href="pay?type=practice">付费练习</a>
+</c:if>
 </body>
 </html>

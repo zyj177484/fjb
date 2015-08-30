@@ -101,7 +101,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/admin/addExamineCheck")
+	@RequestMapping(value = "/admin/addExamineCheck", method = RequestMethod.POST)
 	public ModelAndView addExamineCheck(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
@@ -196,7 +196,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value = "/admin/manageExamineSubject")
+	@RequestMapping(value = "/admin/manageExamineSubject", method = RequestMethod.POST)
 	public ModelAndView addExaminationSubject(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
@@ -213,7 +213,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/admin/addExamineSubjectCheck")
+	@RequestMapping(value = "/admin/addExamineSubjectCheck", method = RequestMethod.POST)
 	public ModelAndView addExamineSubjectCheck(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();

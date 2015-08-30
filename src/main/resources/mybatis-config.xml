@@ -10,6 +10,7 @@
 		<typeAlias alias="ExamineRoom" type="com.jeff.fjb.dal.entity.ExamineRoomEntity" />		
 		<typeAlias alias="ExamineSubject" type="com.jeff.fjb.dal.entity.ExamineSubjectEntity" />
 		<typeAlias alias="Examine" type="com.jeff.fjb.dal.entity.ExamineEntity" />
+		<typeAlias alias="Order" type="com.jeff.fjb.dal.entity.OrderEntity" />
 	</typeAliases>
 	<environments default="prod">
 		<environment id="prod">

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeff.fjb.dal.mappers.OrderMapper">
+	<resultMap id="OrderResult" type="Order">     
+    	<id property="orderId" column="order_id"/>     
+    	<result property="content" column="content"/>  
+    	<result property="charge" column="charge" /> 
+    	<result property="time" column="time" />
+    	<result property="payed" column="payed" />
+    	<result property="status" column="status" />
+	</resultMap>
+	<insert id="addOrder" parameterType="Order">
+		INSERT INTO orders (order_id, content, charge, time, payed, status)
+		VALUES (#{orderId}, #{content}, #{charge}, #{time}, #{payed}, #{status})
+	</insert>
+	<select id="getOrder" parameterType="String" resultMap="OrderResult">
+		SELECT * FROM orders WHERE order_id=#{orderId}
+	</select>
+	<update id="updateOrderStatus" parameterType="String">
+		UPDATE orders SET status=#{status}
+		WHERE order_id=#{orderId}
+	</update>
+	<update id="payOrder" parameterType="String">
+		UPDATE orders SET status=#{status}, payed=#{payed}
+		WHERE order_id=#{orderId}
+	</update>
+</mapper>
