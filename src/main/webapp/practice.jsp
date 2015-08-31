@@ -11,6 +11,33 @@
 
 		<script>
 			$(document).ready(function(){
+
+				var const_MaxQuestion = 10;
+				$("#quallcount").html(const_MaxQuestion);
+
+				update_question(1);
+
+				function start_new()
+				{
+					location.href = "practice";
+
+				}
+
+				$("#new_start").click(function(){
+
+					var r=confirm("重新开始一轮测试？");
+					if (r==true)
+						{
+							start_new();
+							return;
+						}
+					else
+					{
+						return;
+					}
+
+				});
+
 				$(".bigPic").live("click",function(){   //点击图片放大效果
 					$("#bigPic").animate({
 //						left:'-=250px',
@@ -41,27 +68,63 @@
 					}); 
 
 					if(!user_answer || (user_answer == right_answer))
+					{
+						if(user_answer == right_answer)
+						{
+							var v = $("#TrueNum").text();
+							v = Number(v);
+							v = v+1;
+							$("#TrueNum").html(v);
+						}
 						return true;
+					}
+
+					var w = $("#FalseNum").text();
+					w = Number(w);
+					w = w+1;
+					$("#FalseNum").html(w);
 					$("#rightanswer").show();
 
 				}
 				//show next question 
 				$("#next_q").click(function(){
 
+					var result = check_answer();
+
+					if(result != true)
+						return;
+
 					var id=$("#question_no").text();
 					id++;
 					<%--id = id % 4;--%>
-					if(check_answer())
-						update_question(id);
+					if(id > const_MaxQuestion){
+						var r=confirm("当前测试已完成，是否重新开始一轮测试？");
+						if (r==true)
+							{
+								start_new();
+								return;
+							}
+						else
+						{
+							return;
+						}
+					}
+					update_question(id);
 				});
 				$("#pre_q").click(function(){
 
+					var result = check_answer();
+
+					if(result != true)
+						return;
+
 					var id=$("#question_no").text();
 					id--;
-					if(id<=0)
-						id=1;
-					if(check_answer())
-						update_question(id);
+					if(id<=0){
+						alert("已经是第一题了!");
+						return;
+						}
+					update_question(id);
 				});
 
 				//ajax get question by No.
@@ -175,39 +238,19 @@
 		加载中……
 	</div>
 	<div class="ajshow" id="frm_main" style="display: block;">
-		<div class="title">
-			<span id="t">#2.现金整点业务委托他行代理的金融机构，采取代理行后台清分与记录存储方式的，应当选择_____较为完备的金融机构作为代理行，签订协议，规定冠字号码记录、存储和查询各环节中双方的职责，明确在处理数据丢失或误读时双方应承担的责任。</span>
-		</div>
-		<div class="item">
-			<div class="right" id="question_pic" style="overflow: hidden;">
-				<img class="bigPic" id="bigPic" style="position:relative" src="./images/lena.jpg" height=150px; width=200px; alt="点击查看大图"> 
-				<div class="bigPic" style="color:#999;cursor:pointer; text-align:left; font-size:14px; height:18px; padding-left:24px; line-height:18px; margin-top:5px " onclick="./images/lena.jpg">点击查看大图</div>
-			</div>
-
-			<div style="display:none" id="question_no">2</div>
-			<div class="left">
-				<ul id="ul_answers">
-					<li><input class="user_answer" type="radio" value="A" name="answer" id="answer1"><label for="answer1">A：财务结算制度</label></li>
-					<li><input class="user_answer" type="radio" value="B" name="answer" id="answer2"><label for="answer2">B：内部控制制度</label></li>
-					<li><input class="user_answer" type="radio" value="C" name="answer" id="answer3"><label for="answer3">C：内冠字号码记、存储条件</label></li>
-
-				</ul>
-				<span id="rightanswer" style="display: none" text-align: left; width: 100%;"><span id="question_answer" style="width:auto; display:inline-block; text-align:center; background:#f00" >您答错了！正确答案是：B</span></span>
-			</div>
-
-		</div>
 	</div>
 	<div class="foothidder"></div>
 	<div class="tieba">
 		<a href="javascript:void(0)" class="inp"  id="next_q" title="按键盘 → 进入下一题">下一题</a>
 		<a href="javascript:void(0)" class="inp"  id="pre_q" title="按键盘 ← 进入上一题">上一题</a>
-		<a href="javascript:void(0)" class="inp"  id="mark_q" title="按键盘 ← 进入上一题">标记该题</a>
+		<%--<a href="javascript:void(0)" class="inp"  id="mark_q" >标记该题</a>--%>
+		<a href="javascript:void(0)" class="inp"  id="new_start" >重新开始测试</a>
 
 
 	</div>
 </div>			<div class="userinfo">
 	<div class="left">
-		答对：<span id="TrueNum">1</span> 题&nbsp;&nbsp; 答错：<span id="FalseNum">0</span> 题&nbsp;&nbsp;
+		答对：<span id="TrueNum">0</span> 题&nbsp;&nbsp; 答错：<span id="FalseNum">0</span> 题&nbsp;&nbsp;
 	</div>
 	<div class="right">
 	</div>
@@ -215,7 +258,7 @@
 	</div>
 	
 	<div class="rightr">
-		共 <span id="quallcount">1229</span> 题  &nbsp;&nbsp; 转到
+		共 <span id="quallcount">238</span> 题  &nbsp;&nbsp; 转到
 		<input type="text" id="tbtestindex" name="tbtestindex" onkeyup="userkeyup()" onkeydown="userkeydown()" onblur="userblur()" class="uan">
 		题
 	</div>
