@@ -13,6 +13,7 @@
 <br/>提示：${message }<br />
 </c:if>
 <hr/>
+<c:if test="${!empty examineList}" >
 已有考试:<br/>
 <table>
 <tr><td>科目</td><td>考点</td><td>考场</td><td>开始时间</td><td>结束时间</td><td>报名人数</td><td>考场容纳人数</td></tr>
@@ -28,6 +29,7 @@
    </tr>
    </c:forEach>
 </table>
+</c:if>
 <hr/>
 <form action="addExamineCheck" method="post">
 添加考试:<br/>
