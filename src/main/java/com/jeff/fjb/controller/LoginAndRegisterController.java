@@ -40,8 +40,6 @@ public class LoginAndRegisterController {
 		} else
 			return "请登录或者注册";
 	}
-
-
 	
 	@RequestMapping(value = "/uploadPhoto")
 	public ModelAndView uploadPhoto(HttpServletRequest request) {
