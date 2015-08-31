@@ -87,20 +87,32 @@ public class PracticeController {
 		return result;
 	}
 
-	@RequestMapping(value = "/practice")
-	public ModelAndView login(HttpServletRequest request) {
+	@RequestMapping(value = "/roundPractice")
+	public ModelAndView roundPractice(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView preCheckResult = preCheck(session);
 		if (preCheckResult == null) {
 			JsonArray questionArray = genPractice();
 			session.setAttribute("questionArray", questionArray.toString());
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("practice");
+			mv.setViewName("roundPractice");
 			return mv;
 		} else
 			return preCheckResult;
 	}
 
+	@RequestMapping(value = "/wholePractice")
+	public ModelAndView wholePractice(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("wholePractice");
+			return mv;
+		} else
+			return preCheckResult;
+	}
+	
 	@RequestMapping(value = "/getQuestionPhoto")
 	@ResponseBody
 	public void showImage(HttpServletRequest request, HttpServletResponse response) {
