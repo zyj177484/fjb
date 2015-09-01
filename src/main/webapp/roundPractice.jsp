@@ -19,9 +19,24 @@
 
 				function start_new()
 				{
-					location.href = "practice";
+					location.href = "roundPractice";
 
 				}
+
+				$("#go_go").click(function(){
+					var g_no = $("#goto").attr("value");
+					if(!g_no)
+						return;
+					if(g_no<1 || g_no > const_MaxQuestion)
+						{
+							alert("输入的题号非法，只支持1-"+const_MaxQuestion+"题！");
+							$("#goto").select();
+							return;
+						}
+
+						update_question(g_no);
+
+				});
 
 				$("#new_start").click(function(){
 
@@ -215,13 +230,13 @@
 		<div class="selecttop"></div>
 		<ul>
 			<li>
-				<a href="#" target="_blank">章节练习</a>
+				<a href="wholePractice" >章节练习</a>
 			</li>
 			<li>
-				<a class="on">模拟考试</a>
+				<a href="#" class="on">模拟考试</a>
 			</li>
 			<li>
-				<a href="#" target="_blank">错题集</a>
+				<a href="#" target="_blank" style="display:none">错题集</a>
 			</li>
 		</ul>
 	</div>
@@ -259,8 +274,8 @@
 	
 	<div class="rightr">
 		共 <span id="quallcount">238</span> 题  &nbsp;&nbsp; 转到
-		<input type="text" id="tbtestindex" name="tbtestindex" onkeyup="userkeyup()" onkeydown="userkeydown()" onblur="userblur()" class="uan">
-		题
+		<input type="text" id="goto" name="tbtestindex" class="uan" value="1">
+		题&nbsp;&nbsp;<a href="javascript:void(0)" ><span id="go_go">GO!</span></a>
 	</div>
 </div>			<div class="bottombar">
 	</div>
