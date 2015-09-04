@@ -3,6 +3,7 @@ package com.jeff.fjb.controller;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jeff.fjb.dal.entity.ExamineSubjectEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
+import com.jeff.fjb.dal.service.ExamineSubjectService;
 import com.jeff.fjb.dal.service.UserService;
 
 @Controller
@@ -40,6 +43,24 @@ public class LoginAndRegisterController {
 		} else
 			return "请登录或者注册";
 	}
+	
+	@RequestMapping(value = "/user/signUp")
+	public ModelAndView signUp(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			ExamineSubjectService service = new ExamineSubjectService();
+			List<ExamineSubjectEntity> subjectEntities = service.getRegSubjects(System.currentTimeMillis()/1000);
+			mv.addObject("subjectList", subjectEntities);
+			mv.setViewName("user/signUp");
+		} else {
+			mv.addObject("message", preCheckResult);
+			mv.setViewName("redirect:/index");
+		}
+		return mv;
+	}
+	
 	
 	@RequestMapping(value = "/uploadPhoto")
 	public ModelAndView uploadPhoto(HttpServletRequest request) {

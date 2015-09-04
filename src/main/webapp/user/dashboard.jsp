@@ -22,13 +22,15 @@
 <br />邮箱：${user.mail }
 
 <img src="showPhoto" />
+<br/><a href="user/signUp">考试报名</a>
+
 如果需要进行判断之后再显示，请按如下格式。
 <c:if test="${user.practice == 1}" >
 <br/><a href="roundPractice">开始新一轮模拟练习题</a>
 <br/><a href="wholePractice">开始所有练习题</a>
 </c:if>
 <c:if test="${user.practice == 0}" >
-<br/><a href="pay?type=practice">付费练习</a>
+<br/><a href="user/pay?type=practice">付费练习</a>
 </c:if>
 </body>
 </html>

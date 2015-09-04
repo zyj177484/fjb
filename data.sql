@@ -16,64 +16,161 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `examine_distinct`
+-- Table structure for table `examine`
 --
 
-LOCK TABLES `examine_distinct` WRITE;
-/*!40000 ALTER TABLE `examine_distinct` DISABLE KEYS */;
-INSERT INTO `examine_distinct` VALUES ('上海浦东校区考点','上海金融学院上海市上川路995号'),('测试考点','测试地址');
-/*!40000 ALTER TABLE `examine_distinct` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `examine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine` (
+  `examin_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_id` int(11) NOT NULL,
+  `start_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `sign_up` int(11) NOT NULL DEFAULT '0',
+  `max_num` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`examin_id`),
+  KEY `examine_map_room_idx` (`room_id`),
+  KEY `examine_index` (`subject_id`,`start_time`,`end_time`,`room_id`),
+  CONSTRAINT `examine_map_room` FOREIGN KEY (`room_id`) REFERENCES `examine_room` (`room_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `examine_map_subject` FOREIGN KEY (`subject_id`) REFERENCES `examine_subject` (`subject_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `examine_room`
+-- Table structure for table `examine_distinct`
 --
 
-LOCK TABLES `examine_room` WRITE;
-/*!40000 ALTER TABLE `examine_room` DISABLE KEYS */;
-INSERT INTO `examine_room` VALUES ('测试考点','测试考场',20);
-/*!40000 ALTER TABLE `examine_room` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `examine_distinct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_distinct` (
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fenhang`
+-- Table structure for table `examine_room`
 --
 
-LOCK TABLES `fenhang` WRITE;
-/*!40000 ALTER TABLE `fenhang` DISABLE KEYS */;
-INSERT INTO `fenhang` VALUES ('B0003B231000001','B0003H111000001','中国银行股份有限公司上海市分行','上海市中山东一路23号',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `fenhang` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `examine_room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_room` (
+  `room_id` int(11) NOT NULL AUTO_INCREMENT,
+  `examineDistinct` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `num` int(11) NOT NULL,
+  PRIMARY KEY (`room_id`),
+  KEY `index_examine_room` (`examineDistinct`,`name`),
+  CONSTRAINT `room_distinct` FOREIGN KEY (`examineDistinct`) REFERENCES `examine_distinct` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `practice`
+-- Table structure for table `examine_subject`
 --
 
-LOCK TABLES `practice` WRITE;
-/*!40000 ALTER TABLE `practice` DISABLE KEYS */;
-INSERT INTO `practice` VALUES (1,'___起，全国地市以上银行网点未清分钱捆不能缴存人民银行发行库。','A',1,'2013年7月1日','2013年12月31日','2014年1月1日',NULL,NULL,NULL,'false'),(2,'___起，所有银行网点未清分钱捆不能缴存人民银行发行库。','C',1,'2013年7月1日','2013年12月31日','2014年1月1日',NULL,NULL,NULL,'false'),(3,'金融机构柜台如使用通过两次进钞分别完成鉴伪和清分操作的现金处理设备（一口半清分机），需严格采用___模式进钞的操作流程。','B',1,'一种','两种','三种',NULL,NULL,NULL,'false'),(4,'不迟于___，实现全国性银行省会级网点和部分地方性银行网点付出现金全额清分目标。','A',1,'2015年底','2016年底','2017年底',NULL,NULL,NULL,'false'),(5,'不迟于___，实现全国性银行地市级网点和地方性银行所有网点付出现金全额清分目标。','C',1,'2015年底','2016年底','2017年底',NULL,NULL,NULL,'false'),(6,'金融机构应于___实现县级和以下、即全部网点付出现金全额清分目标，至多可延长到前实现。','B',1,'2020年底，2021年底','2020年底，2022年底','2021年底，2022年底',NULL,NULL,NULL,'false'),(7,'商业银行交存人民银行发行库的已清分完整券投放到另一家商业银行后，长短款、假币等差错责任由___的一方承担。','A',1,'实施清分操作','人民银行','接受已清分完整券',NULL,NULL,NULL,'false'),(8,'金融机构应不迟于___，实现客户的每一笔存取款业务都可查询冠字号码。','B',1,'2014年底','2015年底','2016年底',NULL,NULL,NULL,'false'),(9,'金融机构应不迟于___，实现客户通过存取款一体机办理的取款业务可查询冠字号码。','A',1,'2014年底','2015年底','2016年底',NULL,NULL,NULL,'false'),(10,'金融机构应于___前，实现取款机、存取款一体机及柜台渠道记录的冠字号码集中到_________统一管理','B',1,'2014年底，地市分行','2015年底，地市分行或省分行','2016年底，地市分行或省分行',NULL,NULL,NULL,'false'),(11,'冠字号码信息在金融机构本地及上传到信息系统后至少应保存___个月，并确保数据的安全。','C',1,'1','2','3',NULL,NULL,NULL,'false'),(12,'金融消费者在金融机构办理现金取款业务后，对现金真伪存在异议，经金融机构进行真伪识别确认是假币的，___负有告知消费者通过冠字号码查询功能判别假币是否由其付出的义务。','A',1,'金融机构','人民银行','银监会',NULL,NULL,NULL,'false'),(13,'对于符合规定的查询申请，查询受理单位应在受理之日起___个工作人内办结，如有特殊情况需延长办理时间的，应提前告知查询人。','A',1,'3','5','7',NULL,NULL,NULL,'false'),(14,'金融机构应组织对本机构所辖网点前一日上传的冠字号码信息的___进行核查。','C',1,'有效性','及时性','完整性',NULL,NULL,NULL,'false'),(15,'申请冠字号码查询不需要提供的资料为___。','C',1,'有效证件','假币实物或《假币收缴凭证》','单位介绍信',NULL,NULL,NULL,'false'),(16,'查询受理单位应就查询结果填制《人民币冠字号码查询结果通知书》一式两联，查询人签字确认后，第一联___，第二联_________。','A',1,'查询受理单位存档备查，交查询人','交查询人，查询受理单位存档备查','查询受理单位存档备查，交当地中国人民银行',NULL,NULL,NULL,'false'),(17,'对于存储的冠字号码能与取款人取款业务信息关联的，查询受理单位在履行查询程序后，应在《查询结果通知书》中列示该笔取款___冠字号码及其冠字号码图片。','B',1,'部分','所有','前十个',NULL,NULL,NULL,'false'),(18,'对于存储的冠字号码不能与取款人取款业务信息关联的，应在《查询结果通知书》中注明查询过程，其中采用___的，应对具体方式进行解释。','C',1,'逆向查询','精确查询','模糊查询',NULL,NULL,NULL,'false'),(19,'根据查询结果判定为非金融机构付出的现金或查询人对首次查询结果有异议的，查询受理单位应告知查询人在接到查询结果通知书后___个工作日内申请再查询。','C',1,'1','2','3',NULL,NULL,NULL,'false'),(20,'再查询受理单位收到查询人提交的书面再查询申请后，应当自受理之日起___个工作日内，开展调查与处理工作。','A',1,'15','20','30',NULL,NULL,NULL,'false'),(21,'再查询受理单位收到查询人提交的书面再查询申请后，因情况复杂不能在规定期限内完成的，经相关负责人核批后，可延长至___个工作日，并向查询人说明原因。','C',1,'15','20','30',NULL,NULL,NULL,'false'),(22,'查询申请表、再查询申请表和查询结果通知书应自成类别，以业务发生时间先后为序，按年装订，保存期为___年。','B',1,'2','5','10',NULL,NULL,NULL,'false'),(23,'金融机构应___填制《人民币冠字号码查询情况统计表》。','B',1,'按日','按月','按季',NULL,NULL,NULL,'false'),(24,'人民银行当地分支机构接受投诉核实，发现金融机构未采取有效措施，致使假币对外支付的，按___第四十五条进行处罚。','B',1,'《中华人民共和国中国人民银行法》','《中华人民共和国人民币管理条例》','《中华人民银行假币收缴、鉴定管理办法》',NULL,NULL,NULL,'false'),(25,'清分设备和点钞机记录的冠字号码信息，应在___营业结束后通过各类（U盘或联网）方式导出到P___端或服务器。','AC',1,'每日','每月','每季度',NULL,NULL,NULL,'false'),(26,'采取代理行后台清分，本行中台记录、存储冠字号码方式的，冠字号码文件的记录、存储由___承担。','B',1,'代理行','本行','第三方',NULL,NULL,NULL,'false'),(27,'现金整点业务委托他行代理的金融机构，采取代理行后台清分与记录存储方式的，记录网点受理检索申请，按事先协议约定的方式，向代理行提出检索要求，代理行在___个工作日内向本行提交检索结果，通过记录网点向客户反馈结果。','B',1,'1','2','3',NULL,NULL,NULL,'false'),(28,'假币浓度是指人民银行清分、复点中发现的假币张数占处理该银行现金张数总量的___。','B',1,'十万分比','百万分比','千万分比',NULL,NULL,NULL,'false'),(29,'金融机构在冠字号码查询系统建成以前，必须按照相关要求，按时保证___。','C',1,'后台查询','实时查询','单机查询',NULL,NULL,NULL,'false'),(30,'现金整点业务委托他行代理的金融机构，采取代理行后台清分与记录存储方式的，应当选择___较为完备的金融机构作为代理行，签订协议，规定冠字号码记录、存储和查询各环节中双方的职责，明确在处理数据丢失或误读时双方应承担的责任。','C',1,'财务结算制度','内部控制制度','冠字号码记录、存储条件',NULL,NULL,NULL,'false'),(31,'现金清分业务社会化外包，参照___模式开展冠字号码查询工作检查。','C',1,'后台集中清分','本行自行清分','委托他行代理',NULL,NULL,NULL,'false'),(32,'冠字号码查询分类贴标工作中，自动柜员机通过冠字号码查询系统(软件)，无法在假币纠纷中一一对应地向客户提供取出现钞的冠字号码，但可提供业务发生当天(或时段)该设备内各钞箱所有现钞的冠字号码(文本及图像信息)，应张贴___。','A',1,'黄标','红标','蓝标',NULL,NULL,NULL,'false'),(33,'冠字号码查询分类贴标工作中，柜台通过冠字号码查询系统(软件)，无法在假币纠纷中一一对应地向客户提供取出现钞的冠字号码，但可提供业务发生时段该柜台取款现钞的冠字号码(文本及图像信息)，应张贴___。','A',1,'黄标','红标','蓝标',NULL,NULL,NULL,'false'),(34,'本机或通过冠字号码查询系统(软件)，可实现取款业务信息与冠字号码记录的关联，能在假币纠纷中向客户提供取出现钞的冠字号码(文本及图像信息)，且提供的冠字号码与现钞能一一对应，应张贴___。','C',1,'黄标','红标','蓝标',NULL,NULL,NULL,'false'),(35,'各金融机构应按照“成熟一批，张贴一批”的原则，逐步推进分类贴标工作。于___底前完成所有存取款一体机和取款机的分类贴标工作，_________底前完成所有拒台的分类贴标工作。','C',1,'2014年，2016年','2015年，2016年','2014年，2015年',NULL,NULL,NULL,'false'),(36,'银行业金融机构对外误付假币专项治理工作的总体目标包括_________。','ABD',2,'以对假币“零容忍”的态度，有计划、分步骤地推进银行对外支付现金的全额清分，有效解决银行对外误付假币问题','以冠字号码查询为手段，解决银行涉假币纠纷的举证和责任认定问题','维护金融机构的经济利益，实现成本收益最优化。','维护金融消费者权益，树立银行的良好信用形象',NULL,NULL,'false'),(37,'现金清分指对人民币现金进行_________，并按照人民银行颁布的钞票流通标准进行质量分类的处理过程。','ABC',2,'面额和套别区分','真假币鉴别','数量统计','塑封包装',NULL,NULL,'false'),(38,'现金清分包括______。','CD',2,'集中清分','分散清分','手工清分','机械清分',NULL,NULL,'false'),(39,'全额清分指银行____________的人民币纸币现金券别经过清分。','ABCD',2,'柜台支付','自动取款机支付','自动存取款一体机支付','缴存人民银行发行库回笼券',NULL,NULL,'false'),(40,'银行可采取____________等各种不同方式，提高付出现金清分比例直至实现全额清分','ABCD',2,'自建清分中心实行集中清分','网点配备清分机独立清分','银行共建清分中心进行合作清分','购买驻场式或离场式清分业务外包服务',NULL,NULL,'false'),(41,'金融机构缴存人民银行发行库现金中发现假币情况通报制度以正向激励为原则，对于排名状况持续表现不佳的，人民银行各分支机构可以采取_________等措施，督促金融机构加强假币专项治理工作。','BCD',2,'罚款','约谈高管人员','警告','通报批评',NULL,NULL,'false'),(42,'冠字号码查询工作应记录的要素包括____________。','ABCD',2,'机具编号','币值','冠字号码文本','冠字号码图像',NULL,NULL,'false'),(43,'人民银行分支机构分别对金融机构_________环节开展冠字号码查询检查。','BCD',2,'冠字号码机具购置环节','冠字号码信息存储环节','冠字号码信息检索环节','涉假查询处置环节',NULL,NULL,'false'),(44,'冠字号码查询检查方法分为______。','AB',2,'正查法','倒查法','全面检查法','抽样检查法',NULL,NULL,'false'),(45,'冠字号码检索包括______。','CD',2,'冠字检索','号码检索','精确检索','模糊检索',NULL,NULL,'false'),(46,'金融机构应组织开发与现金处理设备输出文件相匹配的冠字号码查询系统，并实现_________功能。','ABC',2,'能导入本行、其他金融机构或社会化机构现金处理设备输出的FSN文件','能对记录的冠字号码数据进行精确查询和模糊查询','能按照人民银行或金融机构上级行的要求到处相应格式文件','能保存冠字号码信息至少1个月',NULL,NULL,'false'),(47,'人民币冠字号码记录设备是指金融机构和社会化清分机构使用的具备冠字号码识别功能的____________等现钞处理设备。','ABCD',2,'点验钞机','自动化清分机具','取款机','存取款一体机',NULL,NULL,'false'),(48,'模糊查询是输入______等不完整信息或模糊信息，从查询到的结果中再搜索是否包含待查现钞的查询方式。','BD',2,'待查冠字号码的全部字符','待查冠字号码的部分字符','取款时间点','取款时间段',NULL,NULL,'false'),(49,'从人民银行调入和金融机构相互取款业务调入，由本行对外支付的现金，可采取以下任一种方案______。','BC',2,'再次清点并记录冠字号码。金融机构利用本行清分机或A类点验钞机重新清点并记录冠字号码。清点过程中发现的假币，责任归本行；清点过后发现假币，责任归原封捆单位。','再次清点并记录冠字号码。金融机构利用本行清分机或A类点验钞机重新清点并记录冠字号码。清点过程中发现的假币，责任归原封捆单位；清点过后发现假币，责任归本行。','冠字号码信息流与现金实物流同步交接。配备相应软硬件，进行冠字号码信息流与对应现金实物流的同步交接与记录。','金融机构间跨行现金应进行冠字号码采集，不必实现可追溯查询。',NULL,NULL,'false'),(50,'查询受理单位与再查询受理单位均应建立查询登记簿，详细记录受理的每笔查询业务的____________等信息。','ABCD',2,'经办人和复核人','查询号码','查询业务时间','查询结果',NULL,NULL,'false'),(51,'金融机构（包括查询受理单位和再查询受理单位）有_________行为之一的，查询人可到人民银行当地分支机构提出投诉：','ABD',2,'无正当理由不受理查询人申请的','未在规定期限内完成查询的','冠字号码查询结果判定为非金融机构付出假币的','办理查询的程序不符合相关规定的',NULL,NULL,'false'),(52,'金融机构付出假币事实确认清楚后，人民银行总行或当地分支机构应根据______原则予以通报：','AD',2,'对于情节严重、性质较为恶劣、在全国范围内造成负面影响的，由中国人民银行总行在全国金融机构范围内通报。','属于金融机构内部人员作案的，由中国人民银行当地分支机构在辖区范围内通报,同时按照法律程序移交司法机关处理。','属于金融机构误付假币，未造成重大负面影响的，由中国人民银行总行在全国金融机构范围内通报。','属于金融机构内部人员作案的，由中国人民银行总行在全国金融机构范围内通报,同时按照法律程序移交司法机关处理。',NULL,NULL,'false'),(53,'金融机构自行或唆使现金处理设备供应商篡改冠字号码记录信息，使查询后出具的查询结果不实或妨碍人民银行工作人员调查、处理涉假纠纷的，人民银行根据具体情形，可以采取_________处理措施：','ABD',2,'约见该金融机构高级管理人员，进行监管谈话','对该金融机构损害金融消费者权益的行为，向其上级行、同业机构、其他金融监管部门或者社会通报、披露','开除金融机构涉事人员','依法可以采取的其他措施',NULL,NULL,'false'),(54,'冠字号码查询检查工作中，正查法侧重检查金融机构开展冠字号码查询工作的过程，主要检查_________相关业务制度、机具性能、处理流程等要素。','ACD',2,'相关业务制度','查询结果','机具性能','处理流程',NULL,NULL,'false'),(55,'金融机构应结合实际情况，参考以下_________方式防止冠字号码数据丢失。','ABD',2,'在清分环节设置校验程序，对清分的每批次纸币张数与冠字号码记录条数进行校验','在清分机具开机时进行测试，并规定使用过程中的定期抽查频率','在清分机清分之后，逐张对记录的冠字号码信息与现金实物比对','柜员机加钞后取出若干张纸币后登录系统查询验证',NULL,NULL,'false'),(56,'金融机构应根据自身实际，选择______实现取款机渠道记录、存储冠字号码。','BD',2,'现金清分中心配置纸币清分设备。仅对离行式自助设备配款进行清分与记录冠字号码。','现金清分中心配置纸币清分设备。对离行式自助设备配款及部分在行式自助设备配款进行清分与记录冠字号码。','网点配置纸币清分设备。实现对离行式及在行式自助设备配款仅记录冠字号码。','网点配置纸币清分设备。实现对离行式及在行式自助设备配款的清分与记录冠字号码。',NULL,NULL,'false'),(57,'金融机构应根据自身实际，选择______实现存取款一体机渠道记录、存储冠字号码。','AD',2,'存取款一体机加装冠字号码记录模块的，对每一笔存取款业务的纸币记录冠字号码。','存取款一体机加装冠字号码记录模块的，对取出的纸币记录冠字号码，对存入的纸币可不记录冠字号码。','存取款一体机未加装冠字号码记录模块的，可以开启循环功能，加钞前记录冠字号码的参照取款机执行。','存取款一体机未加装冠字号码记录模块的，不得开启循环功能，加钞前记录冠字号码的参照取款机执行。',NULL,NULL,'false'),(58,'金融机构应根据自身实际，选择______实现柜台渠道记录、存储冠字号码。','BC',2,'网点通过纸币清分设备记录冠字号码。利用网点后台或柜台配备的清分机同时实现鉴伪和记录冠字号码功能。','网点通过纸币清分设备记录冠字号码。利用网点后台或柜台配备的清分机同时实现清分和记录冠字号码功能。','网点通过点钞机记录冠字号码。现金通过网点后台清分机进行清分，收付业务发生时利用柜台配备的点钞机记录冠字号码。','网点通过点钞机记录冠字号码。现金通过网点柜台清分机进行清分，收付业务发生时利用后台配备的点钞机记录冠字号码。',NULL,NULL,'false'),(59,'以下____________来源的现金，均应实现冠字号码记录。','ABCD',2,'本网点收入，在网点清分的现金','从人民银行提取的，由它行清分的现金','相互取现业务中从他行调入的已清分现金','从人民银行提取的，由人民银行清分的现金',NULL,NULL,'false'),(60,'金融机构冠字号码检索人员应当熟悉掌握各种方式记录、存储的冠字号码的检索。对_______________等多来源的冠字号码记录及检索方法均应掌握。','ABCDE',2,'本行清分中心清分','本网点清分','他行代理清分中心清分调入','金融机构相互取现调入',NULL,'人民银行清分完整券调入','false'),(61,'机械清分指通过自动化清分机具进行现金清分的处理过程。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(62,'手工清分应由金融机构营业网点组织柜面人员，对尚未配置清分设备或不宜采用清分设备清分的现金进行清点处理。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(63,'金融机构临柜人员对收入现金进行手工挑剔、鉴伪后付出的行为是办理业务的必要步骤，具有小额、分散的性质，属于手工清分范围。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(64,'20元及以上面额必须全额机械清分，10元及以下券别如不适合使用机械清分，可以组织手工清分。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(65,'银行从人民银行发行库支取其他银行缴存的带有“已清分”标识的钱捆和人民银行钞票处理中心清分后的钱捆可不重复清分，直接对外支付。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(66,'金融机构使用钞票处理设备确应操作不便、运行速度慢等特殊情况，可向当地人民银行申请，经批准后，可关闭设备的清分、鉴伪等功能或调低设备性能。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(67,'金融机构记录的冠字号码信息，必须隔天传输到冠字号码查询信息系统。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(68,'由本行清分并对外支付的现金（包括本行营业网点自主清分和现金中心集中清分），由本行记录冠字号码。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(69,'委托他行或社会清分机构清分后调入，由本行对外支付的现金，必须由本行记录、存储冠字号码，保证冠字号码可追溯查询。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(70,'已建成冠字号码查询系统的金融机构应于每个工作日营业结束后，将辖内各分支机构当日记录存储的冠字号码信息集中到地市分行或省分行统一管理。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(71,'对于冠字号码信息存储在本行现金清分中心或社会清分机构的，冠字号码信息应在金融机构实施现金清分后至少保存3个月，并确保数据的安全。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(72,'查询人不能委托第三方代理查询。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(73,'查询申请超过申请时效，查询受理单位不予受理查询申请。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(74,'查询受理单位接受查询人或查询代理人的申请后，应通过冠字号码管理信息系统或后台追溯现金来源查询，在规定的截止日前，向查询人或查询代理人反馈查询结果。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(75,'冠字号码文本数据应保存3个月，冠字号码图像数据应保存1个月。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(76,'精确查询指输入待查冠字号码、取款业务办理证件号等完整信息进行查询。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(77,'根据冠字号码查询结果判定为金融机构付出假币，有假币实物的，应由金融机构按照《中国人民银行假币收缴鉴定管理办法》进行处理，并予以半额赔付。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(78,'为保证假币实物安全，查询人或查询代理人持假币实物申请查询的，应予以封存，并在纸币实物上加盖印章。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(79,'经冠字号码查询或再查询，确认金融机构付出假币，金融机构应及时向当地人民银行分支机构报告。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(80,'存取款一体机未加装冠字号码记录模块的，可以开启循环功能，加钞前记录冠字号码的参照取款机执行。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(81,'网点从本行现金清分中心领取的纸币钱捆，在现金清分中心已记录冠字号码的，可不再重复记录。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(82,'冠字号码查询检查工作中，倒查法侧重检查金融机构冠字号码查询工作的结果，主要检查金融机构是否能够检索（精确检索即可）各个渠道收付现金的冠字号码信息。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(83,'金融机构应制定预案，防止冠字号码数据信息丢失。建议金融机构与机具厂商签订协议，明确机具数据丢失情况下各方的职责和义务。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(84,'使用具备记录存储冠字号码功能的存取款一体机存储、记录的纸币冠字号码，在没有实现数据导出之前应能做到在本机直接检索。___','A',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(85,'金融机构应做好系统维护和升级更新，确保检索系统正常运行，检索处理及时。设立系统准入，检索人员通过密码或密钥进入系统，如换人管理可使用原检索人员的密码。___','B',3,'正确','错误',NULL,NULL,NULL,NULL,'false'),(86,'2014年6月27日，某银行客户持一张疑似假币、护照和取款凭证到某银行网点投诉，称其2014年6月10日在该网点取款机中取出假币。接客户投诉后，网点柜员认定该疑似假币确为假币，根据《中国人民银行假币收缴、鉴定管理办法》予以收缴，并在假币实物上加盖假币印章。但网点声称持护照不能申请冠字号码查询，必须持本人身份证，且人民银行要求银行业金融机构不迟于2014年底实现取款机实现冠字号码查询，该网点取款机尚未升级，因此银行网点不予受理查询申请。该案例中违反相关规定的包括_________。','BCD',4,'不予受理查询申请的，不应收缴，而应将假币实物退回原持有人','为保证假币实物安全，查询人或查询代理人持假币实物申请查询的，查询受理单位应比照《中国人民银行假币收缴、鉴定管理办法》关于假外币和假硬币的处理办法予以封存，暂不在纸币实物上加盖印章。','银行业金融机构应不迟于2013年底实现取款机可查询冠字号码，而不是2014年底实现。','查询人可携带身份证、军官证、台胞证或护照等有效证件申请查询，而不仅仅只是身份证。',NULL,NULL,'false'),(87,'某银行网点于近期对其存取款一体机进行冠字号码查询功能升级，通过本机或冠字号码查询系统(软件)，可实现取款业务信息与冠字号码记录的关联，能在假币纠纷中向客户提供取出现钞的冠字号码，且提供的冠字号码与现钞能一一对应。升级工作完成后，某客户持相关材料至网点投诉，称在该存取款一体机中取出假币，因取款时看见黄色标识上“查询冠字号码解决假币纠纷”字样，故前来申请查询。网点要求客户填写《人民币冠字号码再查询申请表》，并告知5个工作日内办结。网点就查询结果填制《人民币冠字号码查询结果通知书》，并将第一联交查询人。该案例中，____________环节存在违规操作。','ABCD',4,'冠字号码查询分类贴标','冠字号码查询受理','冠字号码查询处理时限','冠字号码查询结果反馈',NULL,NULL,'false'),(88,'某银行业金融机构的现金委托社会清分机构清分后调入，双方达成协议，由社会清分机构记录、存储冠字号码，保证冠字号码可追溯查询。该批现金后调运至该银行某营业网点，网点柜员在为客户李某办理取款业务时，发现调入现金中有一张伪造假币，柜员及时通知社会清分机构，并按相关规定将假币予以收缴。客户李某于次日至网点投诉取出一张变造假币，并要求查询冠字号码。针对该案例，以下表述正确的是______。','BC',4,'网点在付款前发现的假币，应由本行承担责任','网点在付款前发现的假币，应由社会清分机构承担责任','对于客户的查询要求，应由网点受理检索申请，按事先协议约定的方式，向社会清分机构提出检索要求，社会清分机构应在2个工作日内向网点提交检索结果，并由网点向客户反馈结果。','对于客户的查询要求，应由社会清分机构受理检索申请，并向客户反馈结果。',NULL,NULL,'false'),(89,'某银行网点配备了一批一口半清分机，取代点钞机放置在柜台上使用，由网点柜员在支付现金前同时完成清分和记录冠字号码。柜员王某在办理人民币收付业务时，往往根据业务量大小，选择一次进钞或两次进钞清分后对外支付。该银行尚未建立冠字号码查询系统，每月营业结束后，王某通过U盘将一口半清分机记录的冠字号码信息导出到P___端。在一次机具厂商例行维护保养过程中，王某称冠字号码图像文件占用P___端硬盘，要求维保人员关闭机具冠字号码图像记录功能。该案例中，_________环节存在违规操作。','CCBCD',4,'机具配备','现金清分','冠字号码数据信息保存','冠字号码记录要素',NULL,NULL,'false'),(90,'___银行委托___银行开展现金清分业务，并记录清分现金的冠字号码信息。2014年4月1日，___银行将2014年3月1日清分的现金调运给___银行。2014年5月1日，___银行将该批现金支付给其公司客户。该批现金的冠字号码信息应保存至___。','ABBAAC',4,'2014年6月1日','2014年7月1日','2014年8月1日','2014年9月1日',NULL,NULL,'false');
-/*!40000 ALTER TABLE `practice` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `examine_subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `examine_subject` (
+  `subject_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `charge` int(11) NOT NULL,
+  `reg_time` int(11) NOT NULL,
+  `result_time` int(11) NOT NULL,
+  `note` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`subject_id`),
+  KEY `index2` (`subject`,`reg_time`,`result_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `zhihang`
+-- Table structure for table `fenhang`
 --
 
-LOCK TABLES `zhihang` WRITE;
-/*!40000 ALTER TABLE `zhihang` DISABLE KEYS */;
-INSERT INTO `zhihang` VALUES ('B0003S231000233','B0003B231000001','中国银行股份有限公司上海市枫泾支行','B0003S231000233',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `zhihang` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `fenhang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fenhang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `zonghangid` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`,`zonghangid`),
+  KEY `id_idx` (`zonghangid`),
+  CONSTRAINT `fenhangFK` FOREIGN KEY (`zonghangid`) REFERENCES `zonghang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `zonghang`
+-- Table structure for table `practice`
 --
 
-LOCK TABLES `zonghang` WRITE;
-/*!40000 ALTER TABLE `zonghang` DISABLE KEYS */;
-INSERT INTO `zonghang` VALUES ('123a','上海银行','','','',''),('B0003H111000001','中国银行股份有限公司','北京市复兴门内大街1号',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `zonghang` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `practice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `practice` (
+  `id` int(11) NOT NULL,
+  `question` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `answer` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `A` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `B` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `C` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `D` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `photo` mediumblob,
+  `E` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hasPhoto` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'false',
+  PRIMARY KEY (`id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `zhihang`
+--
+
+DROP TABLE IF EXISTS `zhihang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zhihang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `fenhangid` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`,`fenhangid`),
+  KEY `id_idx` (`fenhangid`),
+  CONSTRAINT `zhihangFK` FOREIGN KEY (`fenhangid`) REFERENCES `fenhang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `zonghang`
+--
+
+DROP TABLE IF EXISTS `zonghang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zonghang` (
+  `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contactPeople` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -84,4 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-23 22:32:53
+-- Dump completed on 2015-09-04 22:23:30

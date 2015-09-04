@@ -38,7 +38,7 @@ public class PayController {
 			return "请登录或者注册";
 	}
 	
-	@RequestMapping(value = "/pay")
+	@RequestMapping(value = "/user/pay")
 	public ModelAndView pay(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();

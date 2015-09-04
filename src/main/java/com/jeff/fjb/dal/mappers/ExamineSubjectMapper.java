@@ -10,4 +10,6 @@ public interface ExamineSubjectMapper {
 	public void addSubject(ExamineSubjectEntity entity);
 	public List<ExamineSubjectEntity> getSubjects();
 	public ExamineSubjectEntity getSubject(@Param("subject") String subject);
+	public List<ExamineSubjectEntity> getRegSubjects(@Param("now") long now);
+	public ExamineSubjectEntity getSubjectById(@Param("id") long id);
 }

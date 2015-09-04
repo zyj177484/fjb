@@ -7,7 +7,7 @@
 		(name, address)
 		values (#{name}, #{address});
 	</insert>
-	<insert id="insertExamineRoom" parameterType="ExamineRoom">
+	<insert id="insertExamineRoom" useGeneratedKeys="true" keyProperty="room_id" parameterType="ExamineRoom">
 		INSERT INTO examine_room
 		(examineDistinct, name, num)
 		values (#{examineDistinct}, #{name}, #{num});
@@ -22,7 +22,10 @@
 	<select id="getExamineRoom" parameterType="String" resultType="ExamineRoom">
 		SELECT * FROM examine_room WHERE examineDistinct=#{distinct} AND name=#{room};
 	</select>
-	<select id="getExamineRooms" parameterType="String" resultType="ExamineRoom">
+	<select id="getExamineRoomByDistinct" parameterType="String" resultType="ExamineRoom">
 		SELECT * FROM examine_room WHERE examineDistinct=#{distinct};
-	</select>	
+	</select>
+	<select id="getExamineRoomById" parameterType="Long" resultType="ExamineRoom">
+		SELECT * FROM examine_room WHERE room_id=#{id};
+	</select>
 </mapper>

@@ -3,40 +3,57 @@
 
 <mapper namespace="com.jeff.fjb.dal.mappers.ExamineMapper">
 	<resultMap id="ExamineResult" type="Examine">     
-    	<result property="subject" column="subject"/>     
-    	<result property="examineDistinct" column="examineDistinct"/>  
-    	<result property="room" column="room" /> 
+    	<id property="examindId" column="examine_id"/>
+    	<result property="subjectId" column="subject_id"/>     
+    	<result property="roomId" column="room_id" /> 
     	<result property="startTime" column="start_time" />
     	<result property="endTime" column="end_time" />
     	<result property="signUp" column="sign_up" /> 
     	<result property="maxNum" column="max_num" /> 
 	</resultMap>
-
+	
+	<resultMap id="FullExamineResult" type="Examine">     
+    	<id property="examindId" column="examine_id"/>
+    	<result property="subjectId" column="subject_id"/>     
+    	<result property="roomId" column="room_id" /> 
+    	<result property="startTime" column="start_time" />
+    	<result property="endTime" column="end_time" />
+    	<result property="signUp" column="sign_up" /> 
+    	<result property="maxNum" column="max_num" />
+    	<result property="subject" column="subject" />
+    	<result property="room" column="room" />
+    	<result property="examineDistinct" column="examineDistinct" />
+	</resultMap>
+	
 	<select id="getAllExamine" resultMap="ExamineResult">
 		SELECT * FROM examine 
 	</select>
 	
-	<select id="getToStartExamine" parameterType="Long" resultMap="ExamineResult">
-		SELECT * FROM examine 
+	<select id="getToStartExamine" parameterType="Long" resultMap="FullExamineResult">
+		SELECT a.*, b.subject, c.examineDistinct, c.name room FROM fjb.examine a
+		LEFT JOIN  fjb.examine_subject b
+		ON a.subject_id =  b.subject_id
+		LEFT JOIN  fjb.examine_room c
+		ON a.room_id =  c.room_id
 		WHERE start_time>=#{now}
 	</select>	
 	
-	<select id="getUsedExamineRoom" parameterType="Examine" resultMap="ExamineResult">
+	<select id="getUsedExamineRoom" resultMap="ExamineResult">
 		SELECT * FROM examine 
-		WHERE examineDistinct=#{examineDistinct} AND room=#{room}
+		WHERE room_id=#{roomId}
 		AND ((#{startTime}>=start_time AND end_time>=#{startTime}) OR (#{endTime}>=start_time AND end_time>=#{endTime}))
-	</select>	
+	</select>
 	
-	<insert id="addExamine" parameterType="Examine">
-		INSERT INTO examine (subject, examineDistinct, room, start_time, end_time, sign_up, max_num)
-		VALUES (#{subject}, #{examineDistinct}, #{room}, #{startTime}, #{endTime}, #{signUp}, #{maxNum})
+	<insert id="addExamine" useGeneratedKeys="true" keyProperty="examine_id" parameterType="Examine">
+		INSERT INTO examine (subject_id, room_id, start_time, end_time, sign_up, max_num)
+		VALUES (#{subjectId}, #{roomId}, #{startTime}, #{endTime}, #{signUp}, #{maxNum})
 	</insert>
 	
 	<insert id="addExamines">
-		INSERT INTO examine (subject, examineDistinct, room, start_time, end_time, sign_up, max_num)
+		INSERT INTO examine (subject_id, room_id, start_time, end_time, sign_up, max_num)
         VALUES
         <foreach collection="entities" index="index" item="entity" separator=",">
-            (#{entity.subject},#{entity.examineDistinct},#{entity.room},#{entity.startTime},#{entity.endTime},#{entity.signUp},#{entity.maxNum})
+            (#{entity.subjectId},#{entity.roomId},#{entity.startTime},#{entity.endTime},#{entity.signUp},#{entity.maxNum})
         </foreach>
 	</insert>
 </mapper>

@@ -24,6 +24,17 @@ import com.jeff.fjb.dal.service.UserService;
 @Controller
 public class RESTApi {
 	
+	@RequestMapping(value = "/getExamineBySubject")
+	@ResponseBody
+	public void getExamineBySubject(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String subject = request.getParameter("subject");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setContentType("text/plain;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		
+	}
+	
 	@RequestMapping(value = "/showPhoto")
 	@ResponseBody
 	public void showImage(HttpServletRequest request, HttpServletResponse response) {
@@ -117,7 +128,7 @@ public class RESTApi {
 		System.out.println(distinct);
 		if (distinct!=null) {
 			ExamineRoomService service = new ExamineRoomService();
-			List<ExamineRoomEntity> entities = service.getExamineRooms(distinct);
+			List<ExamineRoomEntity> entities = service.getExamineRoomByDistinct(distinct);
 			out.write(new Gson().toJson(entities));
 		} else {
 			out.write("未输入考区");

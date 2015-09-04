@@ -13,7 +13,7 @@
 <br/>提示：${message }<br />
 </c:if>
 <hr/>
-<c:if test="${!empty examineListL}" >
+<c:if test="${!empty examineList}" >
 已有考试:<br/>
 <table>
 <tr><td>科目</td><td>考点</td><td>考场</td><td>开始时间</td><td>结束时间</td><td>报名人数</td><td>考场容纳人数</td></tr>
@@ -33,9 +33,9 @@
 <hr/>
 <form action="addExamineCheck" method="post">
 添加考试:<br/>
-*科目名称:<select name="subject">
+*科目名称:<select name="subjectId">
    <c:forEach items="${subjectList}" var="subjectEntity">  
-        <option value="<c:out value="${subjectEntity.subject}"></c:out>" ><c:out value="${subjectEntity.subject}, 考试结果公布日期:${subjectEntity.resultTimeString} }"> </c:out></option>
+        <option value="<c:out value="${subjectEntity.subjectId}"></c:out>" ><c:out value="${subjectEntity.subject}, 考试结果公布日期:${subjectEntity.resultTimeString} }"> </c:out></option>
    </c:forEach>
 </select><br/>
 *考区名称:<select name="distinct">
@@ -45,10 +45,11 @@
 </select><br/>
 根据api获取对应考区的所有的考场:<br/>
 http://localhost:8080/fjb/getRooms?distinct=测试考点<br/>
-[{"examineDistinct":"测试考点","name":"测试考场","num":20},{"examineDistinct":"测试考点","name":"测试考场2","num":20}]<br/>
+[{"examineDistinct":"测试考点","name":"测试考场","num":20,"id":2},{"examineDistinct":"测试考点","name":"测试考场2","num":20,"id":3}]<br/>
 *请选择考场：<br/>
-<input name="room" type="checkbox" value="测试考场" />测试考场<br/>
-<input name="room" type="checkbox" value="测试考场2" />测试考场2<br/>
+value为id值，显示给用户name
+<input name="roomId" type="checkbox" value="2" />测试考场<br/>
+<input name="roomId" type="checkbox" value="3" />测试考场2<br/>
 *考试日期(日期格式YYYY-MM-DD，例如2015-09-05):<input name="date" type="text" /><br/>
 *开始时间(时间格式HH:mm:ss，例如13:05:00):<input name="startTime" type="text" /><br/>
 *结束时间(时间格式HH:mm:ss，例如13:05:00):<input name="endTime" type="text" /><br/>

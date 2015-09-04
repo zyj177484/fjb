@@ -2,6 +2,7 @@ package com.jeff.fjb.dal.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 
 import com.jeff.fjb.dal.entity.ExamineEntity;
@@ -30,11 +31,11 @@ public class ExamineService {
 		}
 	}
 	
-	public List<ExamineEntity> getUsedExamineRoom(ExamineEntity examineEntity) {
+	public List<ExamineEntity> getUsedExamineRoom(long roomId, long startTime, long endTime) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
-			return examineMapper.getUsedExamineRoom(examineEntity);
+			return examineMapper.getUsedExamineRoom(roomId, startTime, endTime);
 		} finally {
 			sqlSession.close();
 		}

@@ -13,5 +13,6 @@ public interface ExamineRoomMapper {
 	public List<ExamineDistinctEntity> getAllExamineDistinct();
 	public ExamineDistinctEntity getExamineDistinct(@Param("distinct")String distinct);
 	public ExamineRoomEntity getExamineRoom(@Param("distinct")String distinct, @Param("room")String room);
-	public List<ExamineRoomEntity> getExamineRooms(@Param("distinct")String distinct);
+	public List<ExamineRoomEntity> getExamineRoomByDistinct(@Param("distinct")String distinct);
+	public ExamineRoomEntity getExamineRoomById(@Param("id") long id);
 }

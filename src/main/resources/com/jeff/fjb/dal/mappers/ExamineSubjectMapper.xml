@@ -3,6 +3,7 @@
 
 <mapper namespace="com.jeff.fjb.dal.mappers.ExamineSubjectMapper">
 	<resultMap id="Subject" type="ExamineSubject">
+    	<id property="subjectId" column="subject_id"/>
     	<result property="subject" column="subject"/>  
     	<result property="charge" column="charge" /> 
     	<result property="note" column="note" />
@@ -14,11 +15,19 @@
 		SELECT * FROM examine_subject 
 	</select>
 	
+	<select id="getRegSubjects" resultMap="Subject">
+		SELECT * FROM examine_subject WHERE reg_time > #{now}
+	</select>
+	
 	<select id="getSubject" parameterType="String" resultMap="Subject">
 		SELECT * FROM examine_subject WHERE subject=#{subject}
 	</select>
 	
-	<insert id="addSubject" parameterType="ExamineSubject">
+	<select id="getSubjectById" parameterType="Long" resultMap="Subject">
+		SELECT * FROM examine_subject WHERE subject_id=#{id}
+	</select>
+	
+	<insert id="addSubject" useGeneratedKeys="true" keyProperty="subject_id" parameterType="ExamineSubject">
 		INSERT INTO examine_subject (subject, charge, note, reg_time, result_time)
 		VALUES (#{subject}, #{charge}, #{note}, #{regTime}, #{resultTime})
 	</insert>

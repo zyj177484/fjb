@@ -23,18 +23,19 @@ DROP TABLE IF EXISTS `examine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `examine` (
-  `subject` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `examineDistinct` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `examin_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_id` int(11) NOT NULL,
   `start_time` int(11) NOT NULL,
   `end_time` int(11) NOT NULL,
-  `room` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `room_id` int(11) NOT NULL,
   `sign_up` int(11) NOT NULL DEFAULT '0',
   `max_num` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`subject`,`examineDistinct`,`start_time`,`end_time`,`room`),
-  KEY `exe_map_room_idx` (`examineDistinct`,`room`),
-  CONSTRAINT `exe_map_distinct_room` FOREIGN KEY (`examineDistinct`, `room`) REFERENCES `examine_room` (`examineDistinct`, `name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `exe_map_subject` FOREIGN KEY (`subject`) REFERENCES `examine_subject` (`subject`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`examin_id`),
+  KEY `examine_map_room_idx` (`room_id`),
+  KEY `examine_index` (`subject_id`,`start_time`,`end_time`,`room_id`),
+  CONSTRAINT `examine_map_room` FOREIGN KEY (`room_id`) REFERENCES `examine_room` (`room_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `examine_map_subject` FOREIGN KEY (`subject_id`) REFERENCES `examine_subject` (`subject_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,12 +60,14 @@ DROP TABLE IF EXISTS `examine_room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `examine_room` (
+  `room_id` int(11) NOT NULL AUTO_INCREMENT,
   `examineDistinct` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `num` int(11) NOT NULL,
-  PRIMARY KEY (`examineDistinct`,`name`),
+  PRIMARY KEY (`room_id`),
+  KEY `index_examine_room` (`examineDistinct`,`name`),
   CONSTRAINT `room_distinct` FOREIGN KEY (`examineDistinct`) REFERENCES `examine_distinct` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,13 +78,15 @@ DROP TABLE IF EXISTS `examine_subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `examine_subject` (
+  `subject_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `charge` int(11) NOT NULL,
   `reg_time` int(11) NOT NULL,
   `result_time` int(11) NOT NULL,
   `note` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`subject`,`reg_time`,`result_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`subject_id`),
+  KEY `index2` (`subject`,`reg_time`,`result_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,4 +226,4 @@ CREATE TABLE `zonghang` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-30 21:44:19
+-- Dump completed on 2015-09-04 22:22:32

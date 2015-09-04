@@ -60,11 +60,21 @@ public class ExamineRoomService {
 		}
 	}
 	
-	public List<ExamineRoomEntity> getExamineRooms(String distinct) {
+	public List<ExamineRoomEntity> getExamineRoomByDistinct(String distinct) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			ExamineRoomMapper examineRoomMapper = sqlSession.getMapper(ExamineRoomMapper.class);
-			return examineRoomMapper.getExamineRooms(distinct);
+			return examineRoomMapper.getExamineRoomByDistinct(distinct);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public ExamineRoomEntity getExamineRoomById(long id) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineRoomMapper examineRoomMapper = sqlSession.getMapper(ExamineRoomMapper.class);
+			return examineRoomMapper.getExamineRoomById(id);
 		} finally {
 			sqlSession.close();
 		}

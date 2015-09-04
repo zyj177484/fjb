@@ -6,7 +6,7 @@ import java.util.TimeZone;
 
 public class ExamineSubjectEntity {
 	private String subject, note;
-	private long charge, regTime, resultTime;
+	private long charge, regTime, resultTime, subjectId;
 	private String resultTimeString;
 	
 	public ExamineSubjectEntity(){}
@@ -18,6 +18,15 @@ public class ExamineSubjectEntity {
 		this.regTime = regTime;
 		this.resultTime = resultTime;
 	}
+
+	public long getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(long subjectId) {
+		this.subjectId = subjectId;
+	}
+
 	public String getResultTimeString() {
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));

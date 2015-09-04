@@ -5,20 +5,43 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 public class ExamineEntity {
-	private String subject, examineDistinct, room, startTimeString, endTimeString;
-	private long startTime, endTime, signUp, maxNum;
+	private String startTimeString, endTimeString, subject, room, examineDistinct;
+	private long startTime, endTime, signUp, maxNum, examineId, subjectId, roomId;
 
 	public ExamineEntity(){}
 
-	public ExamineEntity(String subject, String examineDistinct, String room, long startTime, long endTime, long signUp,
+	public ExamineEntity(long subjectId, long roomId, long startTime, long endTime, long signUp,
 			long maxNum) {
-		this.subject = subject;
-		this.examineDistinct = examineDistinct;
-		this.room = room;
+		this.subjectId = subjectId;
+		this.roomId = roomId;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.signUp = signUp;
 		this.maxNum = maxNum;
+	}
+
+	public String getExamineDistinct() {
+		return examineDistinct;
+	}
+
+	public void setExamineDistinct(String examineDistinct) {
+		this.examineDistinct = examineDistinct;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
 	}
 
 	public String getStartTimeString() {
@@ -43,29 +66,28 @@ public class ExamineEntity {
 		this.endTimeString = endTimeString;
 	}
 
-	public String getSubject() {
-		return subject;
+	public long getExamineId() {
+		return examineId;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setExamineId(long examineId) {
+		this.examineId = examineId;
 	}
 
-
-	public String getExamineDistinct() {
-		return examineDistinct;
+	public long getSubjectId() {
+		return subjectId;
 	}
 
-	public void setExamineDistinct(String examineDistinct) {
-		this.examineDistinct = examineDistinct;
+	public void setSubjectId(long subjectId) {
+		this.subjectId = subjectId;
 	}
 
-	public String getRoom() {
-		return room;
+	public long getRoomId() {
+		return roomId;
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
+	public void setRoomId(long roomId) {
+		this.roomId = roomId;
 	}
 
 	public long getStartTime() {

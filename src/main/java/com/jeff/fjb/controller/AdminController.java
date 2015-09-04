@@ -111,17 +111,25 @@ public class AdminController {
 			mv.setView(new RedirectView("/index", true));
 			return mv;
 		}
-		String[] rooms = request.getParameterValues("room");
-		String subject = request.getParameter("subject");
+		String[] roomIds = request.getParameterValues("roomId");
+		String subjectIdString = request.getParameter("subjectId");
 		String distinct = request.getParameter("distinct");
 		String date = request.getParameter("date").trim();
 		String startTime = request.getParameter("startTime").trim();
 		String endTime = request.getParameter("endTime").trim();
-		if (rooms.length != 0 && subject != null && distinct != null && date != null 
+		if (roomIds.length != 0 && subjectIdString != null && distinct != null && date != null 
 				&& startTime != null && endTime != null) {
-			ExamineSubjectEntity examineSubjectEntity = examineSubjectService.getSubject(subject);
+			long subjectId = 0;
+			try {
+				subjectId = Long.valueOf(subjectIdString);
+			} catch (Exception e) {
+				mv.addObject("message", "科目Id非数字");
+				mv.setView(new RedirectView("/admin/manageExamine", true));
+				return mv;
+			}
+			ExamineSubjectEntity examineSubjectEntity = examineSubjectService.getSubjectById(subjectId);
 			if (examineSubjectEntity == null) {
-		    	mv.addObject("message", "科目:" + subject + " 不存在");
+		    	mv.addObject("message", "科目:" + subjectIdString + " 不存在");
 				mv.setView(new RedirectView("/admin/manageExamine", true));
 				return mv;
 		    }
@@ -159,31 +167,27 @@ public class AdminController {
 		    }
 
 			StringBuffer message = new StringBuffer();
-			for (String room : rooms) {
-				ExamineRoomEntity examineRoomEntity = examineRoomService.getExamineRoom(distinct, room);
+			for (String roomIdString : roomIds) {
+				long roomId = Long.valueOf(roomIdString);
+				ExamineRoomEntity examineRoomEntity = examineRoomService.getExamineRoomById(roomId);
 				if (examineRoomEntity == null) {
-					mv.addObject("message", "考场:" + room + " 不存在");
+					mv.addObject("message", "考场:" + roomIdString + " 不存在");
 					mv.setView(new RedirectView("/admin/manageExamine", true));
 					return mv;
 				}
-				System.out.println("1." + subject + " " + distinct + " " + room + " " + startTimeStamp + " " + endTimeStamp);
-				ExamineEntity examineEntity = new ExamineEntity(subject, distinct, 
-						room, startTimeStamp, endTimeStamp, 0, examineRoomEntity.getNum());
-				List<ExamineEntity> examineEntities = examineService.getUsedExamineRoom(examineEntity);
-				for (ExamineEntity entity : examineEntities ){
-					System.out.println("2." + entity.getSubject() + ":" +entity.getExamineDistinct() + ":" + entity.getRoom() + ":" +entity.getStartTime()+":"+entity.getEndTime());
-				}
+				ExamineEntity examineEntity = new ExamineEntity(subjectId,
+						roomId, startTimeStamp, endTimeStamp, 0, examineRoomEntity.getNum());
+				List<ExamineEntity> examineEntities = examineService.getUsedExamineRoom(roomId, startTimeStamp, endTimeStamp);
 				if (examineEntities == null || examineEntities.size() == 0) {
 					try {
 						examineService.addExamine(examineEntity);
-						System.out.println("3." + examineEntity.getSubject() + ":" +examineEntity.getExamineDistinct() + ":" + examineEntity.getRoom() + ":" +examineEntity.getStartTime()+":"+examineEntity.getEndTime());
-						message.append("成功，考场:" + room + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
+						message.append("成功，考场:" + roomIdString + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
 					} catch (Exception e) {
 						System.out.println("4");
-						message.append("失败，考场:" + room + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
+						message.append("失败，考场:" + roomIdString + " 时间:"+date+ " " + startTime + " ~ " + endTime + "<br/>");
 					}
 				} else {
-					message.append("失败，考场:" + room + " 时间:" + date + " " + startTime + " ~ " + endTime + "<br/>");
+					message.append("失败，考场:" + roomIdString + " 时间:" + date + " " + startTime + " ~ " + endTime + "<br/>");
 				}
 			}
 			mv.addObject("message", message.toString());
