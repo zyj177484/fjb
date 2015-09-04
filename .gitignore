@@ -4,6 +4,7 @@
 .classpath
 .project
 .settings/*
+/logs/*
 !.gitignore
 !/src/*
 !pom.xml
