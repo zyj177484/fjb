@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+先不要做这个页面，还没完成
 <form action="signUpCheck" method="post">  
 选择科目:<select name="subject">
 <c:forEach items="${subjectList}" var="subjectEntity">  
