@@ -2,8 +2,11 @@ package com.jeff.fjb.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.jeff.fjb.dal.entity.ExamineEntity;
 import com.jeff.fjb.dal.entity.ExamineSubjectEntity;
 import com.jeff.fjb.dal.entity.UserEntity;
+import com.jeff.fjb.dal.service.ExamineService;
 import com.jeff.fjb.dal.service.ExamineSubjectService;
 import com.jeff.fjb.dal.service.UserService;
 
@@ -50,9 +59,31 @@ public class LoginAndRegisterController {
 		ModelAndView mv = new ModelAndView();
 		String preCheckResult = preCheck(session);
 		if (preCheckResult == null) {
+			Set<Long> signedSubjects = new HashSet<Long>();
+			if (session.getAttribute("examineId") != null) {
+				JsonArray examineIds = new JsonParser().parse(session.getAttribute("examineId").toString()).getAsJsonArray();
+				ExamineService examineService = new ExamineService();
+				List<ExamineEntity> examineList = new ArrayList<ExamineEntity>();
+				for (int i=0;i<examineIds.size();i++) {
+					long examineId = examineIds.get(i).getAsLong();
+					ExamineEntity entity = examineService.getExamineById(examineId);
+					entity.setStartTimeString(entity.getStartTimeString());
+					entity.setEndTimeString(entity.getEndTimeString());
+					examineList.add(entity);
+					signedSubjects.add(entity.getSubjectId());
+				}
+				mv.addObject("examineList", examineList);
+			}
 			ExamineSubjectService service = new ExamineSubjectService();
 			List<ExamineSubjectEntity> subjectEntities = service.getRegSubjects(System.currentTimeMillis()/1000);
-			mv.addObject("subjectList", subjectEntities);
+			if (signedSubjects.size()!=0) {
+				List<ExamineSubjectEntity> filteredSubjectEntities = new ArrayList<ExamineSubjectEntity>();
+				for (ExamineSubjectEntity subjectEntity : subjectEntities) 
+					if (!signedSubjects.contains(subjectEntity.getSubjectId())) 
+						filteredSubjectEntities.add(subjectEntity);
+				mv.addObject("subjectList", filteredSubjectEntities);
+			} else 
+				mv.addObject("subjectList", subjectEntities);
 			mv.setViewName("user/signUp");
 		} else {
 			mv.addObject("message", preCheckResult);
@@ -61,6 +92,36 @@ public class LoginAndRegisterController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/user/signUpCheck")
+	public ModelAndView sighUpCheck(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mv = new ModelAndView();
+		String preCheckResult = preCheck(session);
+		if (preCheckResult == null) {
+			long examineId = 0;
+			try {
+				examineId = Long.valueOf(request.getParameter("examineId"));
+			} catch (Exception e) {
+				mv.addObject("message", "考试ID不是数字");
+				mv.setViewName("redirect:/index");
+				return mv;
+			}
+			if (session.getAttribute("examineId") == null) {
+				JsonArray examineIds = new JsonArray();
+				examineIds.add(new JsonPrimitive(examineId));
+				session.setAttribute("examineId", examineIds.toString());
+			} else {
+				JsonArray examineIds = new JsonParser().parse(session.getAttribute("examineId").toString()).getAsJsonArray();
+				examineIds.add(new JsonPrimitive(examineId));
+				session.setAttribute("examineId", examineIds.toString());
+			}
+			mv.setViewName("redirect:/user/signUp");
+		} else {
+			mv.addObject("message", preCheckResult);
+			mv.setViewName("redirect:/index");
+		}
+		return mv;
+	}
 	
 	@RequestMapping(value = "/uploadPhoto")
 	public ModelAndView uploadPhoto(HttpServletRequest request) {

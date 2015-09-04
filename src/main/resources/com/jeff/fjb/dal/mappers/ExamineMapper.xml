@@ -29,6 +29,16 @@
 		SELECT * FROM examine 
 	</select>
 	
+	<select id="getExamineById" parameterType="Long" resultMap="FullExamineResult">
+		SELECT a.*, b.subject, c.examineDistinct, c.name room 
+		FROM fjb.examine a
+		LEFT JOIN  fjb.examine_subject b
+		ON a.subject_id =  b.subject_id
+		LEFT JOIN  fjb.examine_room c
+		ON a.room_id =  c.room_id
+		WHERE a.examine_id=#{examineId}
+	</select>
+	
 	<select id="getToStartExamine" parameterType="Long" resultMap="FullExamineResult">
 		SELECT a.*, b.subject AS subject, c.examineDistinct, c.name AS room 
 		FROM fjb.examine a

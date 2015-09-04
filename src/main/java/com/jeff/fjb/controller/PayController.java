@@ -61,6 +61,8 @@ public class PayController {
 					mv.addObject("charge", MagicNum.PRACTICE_CHARGE);
 					mv.addObject("attention", "确认付费" + MagicNum.PRACTICE_CHARGE + "元进行练习。<br>订单" + MagicNum.ORDER_WAIT_TIME/60/1000 + "分钟后将失效。");
 					mv.setViewName("user/pay");
+				} else if (type.equals("examine")) {
+					
 				}
 				return mv;
 			} else {

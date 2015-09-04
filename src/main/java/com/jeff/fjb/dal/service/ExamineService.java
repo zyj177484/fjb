@@ -52,6 +52,16 @@ public class ExamineService {
 		}
 	}
 	
+	public ExamineEntity getExamineById(long examineId) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
+			return examineMapper.getExamineById(examineId);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 	public void addExamine(ExamineEntity entity) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
