@@ -31,6 +31,17 @@ public class ExamineService {
 		}
 	}
 	
+	public List<ExamineEntity> getToStartExamineBySubject(long now, long subjectId) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			ExamineMapper examineMapper = sqlSession.getMapper(ExamineMapper.class);
+			return examineMapper.getToStartExamineBySubject(now, subjectId);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	
 	public List<ExamineEntity> getUsedExamineRoom(long roomId, long startTime, long endTime) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {

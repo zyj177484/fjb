@@ -62,11 +62,16 @@ public class ExamineSubjectService {
 	}
 	
 	public static void main(String[] args) {
-		ExamineService service = new ExamineService();
+//		ExamineService service = new ExamineService();
 		long now =System.currentTimeMillis()/1000;
-		List<ExamineEntity> examineEntities = service.getToStartExamine(now);
-		for (ExamineEntity entity : examineEntities){
-			System.out.println(entity.getExamineId() + ":" + entity.getExamineDistinct() + " " +entity.getRoom() + " " + entity.getSubject());
-		}
+//		List<ExamineEntity> examineEntities = service.getToStartExamine(now);
+//		for (ExamineEntity entity : examineEntities){
+//			System.out.println(entity.getExamineId() + ":" + entity.getExamineDistinct() + " " +entity.getRoom() + " " + entity.getSubject());
+//		}
+		long subjectId = 1;
+		ExamineService service = new ExamineService();
+		List<ExamineEntity> examineEntities = service.getToStartExamineBySubject(now, subjectId);
+		for (ExamineEntity entity : examineEntities)
+			System.out.println(entity.getExamineId());
 	}
 }

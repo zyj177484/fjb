@@ -16,23 +16,42 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jeff.fjb.dal.entity.BankEntity;
+import com.jeff.fjb.dal.entity.ExamineEntity;
 import com.jeff.fjb.dal.entity.ExamineRoomEntity;
 import com.jeff.fjb.dal.service.BankService;
 import com.jeff.fjb.dal.service.ExamineRoomService;
+import com.jeff.fjb.dal.service.ExamineService;
 import com.jeff.fjb.dal.service.UserService;
 
 @Controller
 public class RESTApi {
 	
-	@RequestMapping(value = "/getExamineBySubject")
+	@RequestMapping(value = "/getToStartExamineBySubjectId")
 	@ResponseBody
 	public void getExamineBySubject(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String subject = request.getParameter("subject");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setContentType("text/plain;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		
+		long subjectId = 0;
+		try {
+			subjectId = Long.valueOf(request.getParameter("subjectId"));
+		} catch (Exception e) {
+			JsonObject object = new JsonObject();
+			object.addProperty("type", "0");
+			object.addProperty("message", "科目ID不正确");
+			object.addProperty("view", "login");
+			out.write(object.toString());
+			return;
+		}
+		long now = System.currentTimeMillis()/1000;
+		ExamineService service = new ExamineService();
+		List<ExamineEntity> examineEntities = service.getToStartExamineBySubject(now, subjectId);
+		for (ExamineEntity entity : examineEntities) {
+			entity.setStartTimeString(entity.getStartTimeString());
+			entity.setEndTimeString(entity.getEndTimeString());
+		}
+		out.write(new Gson().toJson(examineEntities));
 	}
 	
 	@RequestMapping(value = "/showPhoto")

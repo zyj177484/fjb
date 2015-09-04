@@ -3,7 +3,7 @@
 
 <mapper namespace="com.jeff.fjb.dal.mappers.ExamineMapper">
 	<resultMap id="ExamineResult" type="Examine">     
-    	<id property="examindId" column="examine_id"/>
+    	<id property="examineId" column="examine_id"/>
     	<result property="subjectId" column="subject_id"/>     
     	<result property="roomId" column="room_id" /> 
     	<result property="startTime" column="start_time" />
@@ -13,7 +13,7 @@
 	</resultMap>
 	
 	<resultMap id="FullExamineResult" type="Examine">     
-    	<id property="examindId" column="examine_id"/>
+    	<id property="examineId" column="examine_id"/>
     	<result property="subjectId" column="subject_id"/>     
     	<result property="roomId" column="room_id" /> 
     	<result property="startTime" column="start_time" />
@@ -30,13 +30,25 @@
 	</select>
 	
 	<select id="getToStartExamine" parameterType="Long" resultMap="FullExamineResult">
-		SELECT a.*, b.subject, c.examineDistinct, c.name room FROM fjb.examine a
+		SELECT a.*, b.subject AS subject, c.examineDistinct, c.name AS room 
+		FROM fjb.examine a
 		LEFT JOIN  fjb.examine_subject b
 		ON a.subject_id =  b.subject_id
 		LEFT JOIN  fjb.examine_room c
 		ON a.room_id =  c.room_id
 		WHERE start_time>=#{now}
-	</select>	
+	</select>
+	
+	<select id="getToStartExamineBySubject" resultMap="FullExamineResult">
+		SELECT a.*, b.subject, c.examineDistinct, c.name room 
+		FROM fjb.examine a
+		LEFT JOIN  fjb.examine_subject b
+		ON a.subject_id =  b.subject_id
+		LEFT JOIN  fjb.examine_room c
+		ON a.room_id =  c.room_id
+		WHERE a.start_time>=#{now}
+		AND a.subject_id=#{subjectId}
+	</select>
 	
 	<select id="getUsedExamineRoom" resultMap="ExamineResult">
 		SELECT * FROM examine 
