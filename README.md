@@ -132,3 +132,6 @@ num表示该考场最大人数
 重做有关考试的表,请重新createTable
 完成考试报名页面（付费部分未完成）
 通过/user/dashboard.jsp进入/user/signUp.jsp
+
+2015.09.13###################
+右键项目fjb --> build path --> configure build path --> 左边选择 java build path --> 右上 选择 Libraries --> add external jars --> 添加lib文件夹下所有 jar
