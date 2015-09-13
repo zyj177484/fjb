@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.jeff.fjb.dal.entity.ExamineEntity;
@@ -30,6 +29,7 @@ import com.jeff.fjb.dal.entity.UserEntity;
 import com.jeff.fjb.dal.service.ExamineService;
 import com.jeff.fjb.dal.service.ExamineSubjectService;
 import com.jeff.fjb.dal.service.UserService;
+import com.allinpay.ets.client.util.Base64;
 
 @Controller
 public class LoginAndRegisterController {
