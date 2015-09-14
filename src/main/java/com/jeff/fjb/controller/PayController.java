@@ -78,7 +78,7 @@ public class PayController {
 		}
 	}
 	
-	@RequestMapping(value = "/payCheck", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/payCheck", method = RequestMethod.POST)
 	public ModelAndView payCheck(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
